@@ -79,8 +79,42 @@ func kthToLastElementBrute(head : Node?, k : Int) -> Node?{
     return nil
 }
 
-var linkedList = SinglyLinkedList(nums: [1,2,3,4,5,6])
+/* 2.3 Delete middle node
+ Question : Delete a node in the middle (not necessarily the middle node). The node must not be the first or last node of a singly linked list, given only access to that node
+ 
+ Not sure how this input works out, because C could be the first node, we cannot tell....
+ input : a > b  > c > d > e > f
+ output : a > b > d > e > f
+ 
+ input : a > b
+ output : a > b
+ 
+ Approach : If node.next == nil, then the provided node is the tail, do nothing. If node.next != nil && node.next.next != nil, we should delete node.next because we can safely assume that node.next can act as a "middle" node. Not having knowledge on a possible preceding node to the given node, we cannot make concrete assertions about the problem.
+    Due to ambiguity in the wording and input output example provided, I will code up a way to delete the given node without a previous pointer. Copy contents of node.next into node and swap pointer of node.next to node.next.next
+ */
+
+func deleteMiddleNode(node : Node) -> Node?{
+    var curr = node
+    curr.value = 2
+    curr.next?.next?.value = 99
+
+    curr.next = curr.next?.next
+    return curr
+}
+var b : Node? = Node(num: 1)
+b?.next = Node(num: 2)
+b?.next?.next = Node(num: 3)
+b?.next?.next?.next = Node(num: 4)
+let xa = SinglyLinkedList(node: b!)
+
+deleteMiddleNode(node: b!)
+
+let x = SinglyLinkedList(node: b!)
+
+
+//var linkedList = SinglyLinkedList(nums: [1,2,3,4,5,6])
+var linkedList = SinglyLinkedList(nums: [1,1,1,1,5,1])
 let n = kthToLastElementBrute(head: linkedList.head, k: 1)
 //removeDupesNoBuffer(linkedList: &linkedList)
 //removeDuplicates(linkedList: &linkedList)
-
+let fre = linkedList.countFrequency(val: 5, node: linkedList.head)

@@ -202,4 +202,23 @@ public class SinglyLinkedList : CustomStringConvertible{
         
     }
     
+    // Recursively count frequency
+    public func countFrequency(val : Int, node : Node?) -> Int{
+        if node == nil {
+            return 0
+        }
+        return node?.value == val ? 1 + countFrequency(val : val, node : node?.next) : 0 + countFrequency(val : val, node : node?.next)
+    }
+    
+    static public func recursiveContainsval(val : Int, node : Node?) -> Bool{
+        if node == nil {
+            return false
+        }
+        if node?.next == nil {
+            return node?.value == val
+        }else{
+            return node?.value == val || recursiveContainsval(val : val, node : node?.next)
+        }
+    }
+    
 }

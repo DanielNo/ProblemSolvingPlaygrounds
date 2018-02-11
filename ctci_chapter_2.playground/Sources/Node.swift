@@ -24,4 +24,18 @@ public class Node : CustomStringConvertible{
     public func printNode(){
         print(self.description)
     }
+    
+    static public func printAllValues(node : Node?){
+        var curr = node
+        var desc = ""
+        while curr != nil {
+            if desc == ""{
+                desc = curr!.description
+            }else{
+                desc += ", \(curr!.description)"
+            }
+            curr = curr?.next
+        }
+        print("\(desc)")
+    }
 }
