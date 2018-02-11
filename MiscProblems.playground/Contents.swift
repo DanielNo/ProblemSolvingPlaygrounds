@@ -21,7 +21,7 @@ func fibonacci(num : Int) -> Int{
 // Fibonacci with pattern matching
 func swiftyFib(num : Int) -> Int{
     switch num {
-    case let x where x <= 0:
+    case _ where num <= 0:
         return memo[0]!
     default:
         if memo[num] == nil{
