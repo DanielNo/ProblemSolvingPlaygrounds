@@ -8,7 +8,7 @@ var memo = {
 }()
 
 func fibonacci(num : Int) -> Int{
-    if num < 0 {
+    if num <= 0 {
         return memo[0]!
     }
     if memo[num] == nil{
@@ -18,4 +18,18 @@ func fibonacci(num : Int) -> Int{
     return memo[num]!
 }
 
-fibonacci(num: 40)
+// Fibonacci with pattern matching
+func swiftyFib(num : Int) -> Int{
+    switch num {
+    case let x where x <= 0:
+        return memo[0]!
+    default:
+        if memo[num] == nil{
+            memo[num] = fibonacci(num: num - 1) + fibonacci(num: num - 2)
+        }
+        return memo[num]!
+    }
+}
+
+//fibonacci(num: 90)
+swiftyFib(num: 90)
