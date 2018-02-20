@@ -48,7 +48,6 @@ public class SinglyLinkedList : CustomStringConvertible{
         }
     }
     
-    
     // Add node to end of LinkedList
     public func append(node : Node){
         var current = head
@@ -57,20 +56,6 @@ public class SinglyLinkedList : CustomStringConvertible{
         }
         current?.add(node: node)
         
-    }
-    
-    public func printLinkedList(){
-        var node = head
-        var output = "["
-        while node != nil {
-            output = "\(output)\(node!.description)"
-            node = node!.next
-            if node != nil{
-                output = output + ","
-            }
-        }
-        output = output + "]"
-        print("Singly Linked List : \(output)")
     }
     
     public func count() -> Int{
@@ -86,6 +71,24 @@ public class SinglyLinkedList : CustomStringConvertible{
         return count
     }
     
+    public func printLinkedList(){
+        var node = head
+        var output = "["
+        while node != nil {
+            output = "\(output)\(node!.description)"
+            node = node!.next
+            if node != nil{
+                output = output + ","
+            }
+        }
+        output = output + "]"
+        print("Singly Linked List : \(output)")
+    }
+
+
+
+
+
     public func nodeAt(index: Int) -> Node?{
         if (index < 0){return nil}
         var count = 0
@@ -146,22 +149,36 @@ public class SinglyLinkedList : CustomStringConvertible{
         }
     }
     
-    // incomplete
-    public func removeNodesWithValue(value : Int){
-        var current = head
-        var prev : Node? = nil
-        while current?.value != value && current?.next != nil {
-            prev = current
-            current = current?.next
-            if current?.value == value{
-                if prev != nil{
-                    prev?.next = current
-                }else{
-                    self.head = current?.next
-                }
-                
-            }
+    //        var current = head
+    //        var prev : Node? = nil
+    //        while current?.value != value && current?.next != nil {
+    //            prev = current
+    //            current = current?.next
+    //            if current?.value == value{
+    //                if prev != nil{
+    //                    prev?.next = current
+    //                }else{
+    //                    self.head = current?.next
+    //                }
+    //
+    //            }
+    //        }
+
+    
+    // TODO:**FINISH THIS**
+    public func removeNodesWithValue(value : Int) -> SinglyLinkedList?{
+        var ans = self.head
+        while (ans?.value == value){
+            ans = ans?.next
         }
+        var curr = ans
+        while curr != nil {
+            if(curr?.next?.value == value){
+                curr?.next = curr?.next?.next
+            }
+            curr = curr!.next
+        }
+        return SinglyLinkedList(node : ans!)
     }
     
     public func reverseTraversal() -> SinglyLinkedList?{
@@ -209,16 +226,23 @@ public class SinglyLinkedList : CustomStringConvertible{
         }
         return node?.value == val ? 1 + countFrequency(val : val, node : node?.next) : 0 + countFrequency(val : val, node : node?.next)
     }
+
+    // TODO : Revise later
+//    static public func recursiveContains(val : Int, node : Node?) -> Bool{
+//        if node == nil {
+//            return false
+//        }
+//        if node?.next == nil {
+//            return node?.value == val
+//        }else{
+//            return node?.value == val || recursiveContainsval(val : val, node : node?.next)
+//        }
+//    }
     
-    static public func recursiveContainsval(val : Int, node : Node?) -> Bool{
-        if node == nil {
-            return false
-        }
-        if node?.next == nil {
-            return node?.value == val
-        }else{
-            return node?.value == val || recursiveContainsval(val : val, node : node?.next)
-        }
+    // TODO:
+    public func iterativeContains(val : Int) -> Bool{
+        var node = self.head
+        return true
     }
     
 }

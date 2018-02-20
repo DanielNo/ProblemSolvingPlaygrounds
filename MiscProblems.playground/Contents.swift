@@ -23,9 +23,11 @@ func swiftyFib(num : Int) -> Int{
     switch num {
     case _ where num <= 0:
         return memo[0]!
+    case 1:
+        return memo[1]!
     default:
         if memo[num] == nil{
-            memo[num] = fibonacci(num: num - 1) + fibonacci(num: num - 2)
+            memo[num] = swiftyFib(num: num - 1) + swiftyFib(num: num - 2)
         }
         return memo[num]!
     }
