@@ -58,6 +58,25 @@ public class Node : CustomStringConvertible{
         }
         return node
     }
+    
+    // Leetcode : https://leetcode.com/problems/reverse-linked-list/description/
+    // Approach : Reverse it in one pass, with multiple pointers to nodes
+    // start with tail being nil. This was a little tricky to do on paper without any logical feedback.
+    public func reverseList(_ head : Node?) -> Node?{
+        if(head?.next == nil){
+            return head
+        }
+        var curr = head
+        var tail : Node? = nil
+        while(curr != nil){
+            let next = curr?.next
+            curr?.next = tail
+            tail = curr
+            curr = next
+        }
+        return tail
+
+    }
 
 }
 

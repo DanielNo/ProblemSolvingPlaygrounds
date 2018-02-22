@@ -66,7 +66,7 @@ func kthToLastElementBrute(head : Node?, k : Int) -> Node?{
         return nil
     }
     let target = size - k
-    print("target \(target)")
+//    print("target \(target)")
     curr = head
     while curr != nil {
         if target == count {
@@ -101,6 +101,63 @@ func deleteMiddleNode(node : Node) -> Node?{
     curr.next = curr.next?.next
     return curr
 }
+
+/*
+ 2.5 Sum Lists
+ Input : (7 -> 1 -> 6) + (5 -> 9 -> 2). That is 617 + 295 = 912
+ Output : 2 -> 1 -> 9. That is 912
+ 
+ Approach : Reverse the linked list and add the values to a sum, while keeping a counter for digits
+ 
+ Follow up
+ Suppose the digits are stored in forward order. Repeat the above problem
+ Example
+ Input : (6 -> 1 -> 7) + (2 -> 9 -> 5). That is 617 + 295
+ Output : 9 -> 1 -> 2. That is 912
+
+*/
+
+func sumList(num1 : Node?, num2 : Node?) -> Node?{
+    let sum = reverseLinkedListToNum(node: num1) + reverseLinkedListToNum(node: num2)
+    return numberToLinkedList(number: sum)
+}
+
+func reverseLinkedListToNum(node : Node?) -> Int{
+    var sum = 0
+    var multiple = 1
+    var head = node
+    while head != nil {
+        let val = head!.value * multiple
+        multiple = multiple * 10
+        head = head?.next
+        sum = sum + val
+    }
+    print("sum : \(sum)")
+    return sum
+}
+
+func numberToLinkedList(number : Int) -> Node?{
+    var num = number
+    
+    var head : Node? = nil
+    
+    while (num != 0) {
+        let val = num % 10
+        num = num / 10
+        
+        let node = Node(num: val)
+        node.next = head
+        head = node
+    }
+    return head
+}
+
+let num = SinglyLinkedList(nums: [7,1,6])
+let num2 = SinglyLinkedList(nums: [5,9,2])
+
+let sumOfLinkedLists = sumList(num1: num.head, num2: num2.head)
+Node.printAllValues(node: sumOfLinkedLists)
+
 var b : Node? = Node(num: 1)
 b?.next = Node(num: 2)
 b?.next?.next = Node(num: 3)
@@ -118,3 +175,8 @@ let n = kthToLastElementBrute(head: linkedList.head, k: 1)
 //removeDupesNoBuffer(linkedList: &linkedList)
 //removeDuplicates(linkedList: &linkedList)
 let fre = linkedList.countFrequency(val: 5, node: linkedList.head)
+var list = SinglyLinkedList(nums: [1,2,3,4])
+var head = list.head
+var next = head?.next
+head?.next = nil
+
