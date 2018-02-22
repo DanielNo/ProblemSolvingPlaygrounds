@@ -107,7 +107,7 @@ func deleteMiddleNode(node : Node) -> Node?{
  Input : (7 -> 1 -> 6) + (5 -> 9 -> 2). That is 617 + 295 = 912
  Output : 2 -> 1 -> 9. That is 912
  
- Approach : Reverse the linked list and add the values to a sum, while keeping a counter for digits
+ Approach : Reverse the linked lists and conver them to Int, do addition and convert back to linked list. My strategy is simple and is not listed in the book.
  
  Follow up
  Suppose the digits are stored in forward order. Repeat the above problem
