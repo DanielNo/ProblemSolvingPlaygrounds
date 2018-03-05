@@ -45,6 +45,113 @@ func findTheDifference2(_ s: String, _ t: String) -> Character {
     }
     return extraChar.keys.first!
 }
-
-
 findTheDifference2("hello", "helloo")
+
+/* Jewels and Stones : https://leetcode.com/problems/jewels-and-stones/description/
+ You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
+ The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
+ 
+ Input: J = "aA", S = "aAAbbbb"
+ Output: 3
+ Example 2:
+ 
+ Input: J = "z", S = "ZZ"
+ Output: 0
+ S and J will consist of letters and have length at most 50.
+ The characters in J are distinct.
+ 
+ Approach : Take the larger string and enumerate character counts into a dictionary. For each character match of the smaller string in the larger string, increment a counter and return it.
+ Time : O(n) linear
+ Space : O(n) linear space
+ */
+
+func numJewelsInStones(_ J: String, _ S: String) -> Int {
+    var stones : [Character : Int] = Dictionary()
+    var sum = 0
+    for (index,char) in S.enumerated(){
+        stones[char] = stones[char] == nil ? 1 : stones[char]! + 1
+    }
+    for char in J.enumerated(){
+        sum += stones[char.element]!
+    }
+    return sum
+}
+
+/*
+ 21. Merge Two Sorted Lists : https://leetcode.com/problems/merge-two-sorted-lists/description/
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+ 
+ Approach : Iterate through both linked lists and compare for the smaller value. Add the smaller value to the combined linked list and bump the head pointer, repeat until one linked list has finished iterating. Add the remaining elements of the larger linked list.
+ Time : O(n) linear
+ Space : O(n + m) combined space of linked list n and m
+ */
+
+let b1 = true
+let b2 = false
+
+let b = b1 || b2
+
+/* 204. Count Primes : https://leetcode.com/problems/count-primes/description/
+Count the number of prime numbers less than a non-negative number, n.
+ Approach : Use sieve of eranthoses algorithm to mark off composite numbers in an array until the remaining numbers in array are prime.
+*/
+func countPrimes(_ n: Int) -> Int {
+    if n <= 2{
+        return 0
+    }
+    var arr = Array(repeating: true, count: n)
+    arr[0] = false
+    arr[1] = false
+    arr[2] = true
+    var test = 1
+    var limit = Int(Double(n).squareRoot())
+    while test <= limit{
+        // find next prime and mark off all
+        let prime = findNextPrime(arr, primeIndex:test)
+//        print("prime found at index: \(prime), test : \(test)")
+        markBoolean(array: &arr, num: prime)
+        if prime > test {
+            test = prime + 1
+        }else{
+            test += 1
+        }
+    }
+    var count = 0
+//    var primes = [Int]()
+    for (index,val) in arr.enumerated(){
+        if val == true {
+            count += 1
+//            primes.append(index)
+        }
+    }
+//    print(primes)
+//    print(arr)
+    return count
+}
+
+// Get next prime number index in array
+func findNextPrime(_ nums : [Bool], primeIndex : Int) -> Int{
+    var pIndex = primeIndex
+    for index in primeIndex...nums.count{
+        if(nums[index] == true){
+            pIndex = index
+            break
+        }
+    }
+    return pIndex
+}
+
+// Mark all values that are factors of num as a boolean value
+func markBoolean( array : inout [Bool], num : Int) -> [Bool]{
+    var count = num + num
+//    print("marking \(num)")
+    while (count < array.count){
+        array[count] = false
+        count += num
+    }
+    return array
+}
+countPrimes(5000)

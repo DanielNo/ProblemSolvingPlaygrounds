@@ -245,4 +245,44 @@ public class SinglyLinkedList : CustomStringConvertible{
         return true
     }
     
+    /*
+     21. Merge Two Sorted Lists : https://leetcode.com/problems/merge-two-sorted-lists/description/
+     Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+     
+     Input: 1->2->4, 1->3->4
+     Output: 1->1->2->3->4->4
+     
+     Approach : Iterate through both linked lists and compare for the smaller value. Add the smaller value to the combined linked list and bump the head pointer, repeat until one linked list has finished iterating. Add the remaining elements of the larger linked list.
+     * Was difficult to do without looking at hints because of difficulty to keep head pointer. Redo again later iteratively and recursively
+     Time : O(n) linear
+     Space : O(n + m) combined space of linked list n and m
+     */
+
+    public static func mergeTwoLists(_ l1: Node?, _ l2: Node?) -> Node? {
+        if l1 == nil{
+            return l2
+        }
+        if l2 == nil{
+            return l1
+        }
+        var n1 = l1
+        var n2 = l2
+        var result : Node? = Node(num : 0)
+        var head = result
+        while(n1 != nil && n2 != nil){
+            if(n1!.value <= n2!.value){
+                head?.next = n1
+                n1 = n1!.next
+            }else{
+                head?.next = n2
+                n2 = n2!.next
+            }
+            head = head?.next
+        }
+        var remainder = n1 == nil ? n2 : n1
+        head?.next = remainder
+        return result?.next
+    }
+
+    
 }
