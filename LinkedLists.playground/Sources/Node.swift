@@ -12,7 +12,8 @@ public class Node : CustomStringConvertible{
         self.description = String(value)
     }
     
-    public init(num : Int) {
+    public convenience init(num : Int) {
+        self.init()
         self.value = num
         self.description = String(value)
     }

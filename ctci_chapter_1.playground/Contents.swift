@@ -2,6 +2,46 @@
 
 import UIKit
 
+// 1.2 Check Permutation
+// Approach 1 : Sort the strings, compare sorted strings for equality. Very clean but not optimal.
+// Time : O(n log n)
+// Space : O(n), O(1) if input strings are mutable
+// Approach solved: Use a dictionary to track counts of characters in string 1, then eneumerate string 2 and decrease counts, if character in string 2 does not exist, return false, otherwise continue enumerating and return true at the end.
+// Time : O(n)
+// Space : O(n)
+
+func isPermutationSimple(s1 : String, s2 : String) -> Bool{
+    return s1.sorted() == s2.sorted()
+}
+
+func isPermutation(s1 : String, s2 : String) -> Bool{
+    if s1.count != s2.count{
+        return false
+    }
+    var dict : [Character : Int] = Dictionary()
+    for char in s1{
+        dict[char] = (dict[char] == nil) ? 1 : dict[char]! + 1
+        print(char)
+
+    }
+    for char in s2{
+        if dict[char] == nil {
+            return false
+        }else{
+            if dict[char]! - 1 < 0 {
+                return false
+            }else{
+                dict[char] = dict[char]! - 1
+            }
+        }
+    }
+//    print(dict)
+    return true
+}
+
+
+
+
 // 1.5 ONE AWAY
 
 func oneAway(s1 : String, s2 : String) -> Bool{
@@ -105,6 +145,3 @@ func compressedString(s1 : String) -> String{
 //        return s1
 //    }
 //}
-
-compressedString(s1: "aaabbbcccccdd")
-
