@@ -20,9 +20,9 @@ var x = Node.deleteDuplicates(head)
 let test = sortedLinkedlist.head
 let test2 = test?.reverseList(test)
 
-Node.printAllValues(node: test2)
 
 var l1 = SinglyLinkedList(nums: [1,2,4])
 var l2 = SinglyLinkedList(nums: [1,3,4])
 var merged = SinglyLinkedList.mergeTwoLists(l1.head, l2.head)
-Node.printAllValues(node: merged)
+
+let num = Node(num: 11)

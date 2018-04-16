@@ -2,6 +2,7 @@
 
 import UIKit
 
+
 //Fibonacci Sequence with memoization xD
 var memo = {
     return [0 : 0, 1 : 1]
@@ -34,7 +35,7 @@ func swiftyFib(num : Int) -> Int{
 }
 
 //fibonacci(num: 90)
-swiftyFib(num: 90)
+//swiftyFib(num: 90)
 
 
 

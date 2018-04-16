@@ -43,6 +43,9 @@ func isPermutation(s1 : String, s2 : String) -> Bool{
 
 
 // 1.5 ONE AWAY
+// Approach : Break the problem down into smaller pieces by comparing character counts, then call seperate functions to solve. Find longer and shorter string, find difference in length. If difference is 0, check character difference counts by calling seperate function. If difference is 1, check one char difference, insert and delete basically mean the same thing. Otherwise return false because one off differences must have 0 or 1 length difference.
+// Time : O(n)
+// Space : O(n)
 
 func oneAway(s1 : String, s2 : String) -> Bool{
     let big = s1.count > s2.count ? s1 : s2

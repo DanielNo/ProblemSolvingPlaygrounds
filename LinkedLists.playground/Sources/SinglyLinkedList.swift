@@ -283,6 +283,24 @@ public class SinglyLinkedList : CustomStringConvertible{
         head?.next = remainder
         return result?.next
     }
+    
+    public func isLooping() -> Bool{
+        if self.head == nil || self.head?.next == nil {
+            return false
+        }
+        let first = self.head
+        var curr = self.head?.next
+        while curr != nil  {
+            if curr === first{
+                print("iter")
+                return true
+            }else{
+            curr = curr?.next
+                print("iter")
+            }
+        }
+        return false
+    }
 
     
 }
