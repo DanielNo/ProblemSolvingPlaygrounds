@@ -43,7 +43,7 @@ func generate(numRows : Int) -> [[Int]]{
     return triangle
     
 }
-let rows = generate(numRows: 1)
+//let rows = generate(numRows: 1)
 
 /*
  136. Single Number
@@ -66,6 +66,5 @@ func singleNumber(_ nums: [Int]) -> Int {
     return res
 }
 let nums = [1,5,6,5,6,3,1]
-let singleNum = singleNumber(nums)
-
+//let singleNum = singleNumber(nums)
 
