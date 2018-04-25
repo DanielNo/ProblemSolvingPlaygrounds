@@ -3,7 +3,7 @@
 import UIKit
 
 /*
- Pascal's Triangle
+ 118. Pascal's Triangle
  https://leetcode.com/problems/pascals-triangle/description/
  
  Approach : First create a 2d array with the required space beforehand. Initialize all values to 1. Use pattern matching and nested statements to overwrite existing values.
@@ -40,10 +40,79 @@ func generate(numRows : Int) -> [[Int]]{
             }
         }
     }
+    print(triangle)
+
     return triangle
     
 }
-//let rows = generate(numRows: 1)
+//let rows = generate(numRows: 4)
+
+/*
+ 121. Best time to buy and sell stock
+ https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+
+ Naive Approach : Calculate the profit for each value in array individually. Traverse through array and for each value, find the max value in the subarray excluding previous numbers.
+ Ex : [1,2,3,4,5]   for number n at index i=0 : find max of [2,3,4,5]
+ ans = 0
+ ans = n - max[2,3,4,5]
+ return ans
+ 
+ Time complexity : O(n!). Finding the max of the subarray over and over within a for loop.
+ Space complexity : O(1)
+ Note : Fails on edge case where all numbers in a large array where following numbers are all smaller. EX: [1000,999,998...0]
+ */
+func maxProfitNaive(_ prices: [Int]) -> Int {
+    let count = prices.count
+    var ans = 0
+    switch count {
+    case _ where count == 2:
+        ans = prices[0] < prices[1] ? prices[1]-prices[0] : 0
+    case _ where count < 2:
+        break
+    default:
+        for (index,num) in prices.enumerated() {
+            let sellPrices = prices[index+1..<prices.count]
+            if sellPrices.count == 0 {
+                break
+            }
+            let max = sellPrices.max()
+            let profit = max! - num
+            ans = profit > ans ? profit : ans
+        }
+        break
+    }
+    return ans
+}
+
+maxProfitNaive([7,1,5,3,6,4])
+
+/*
+ Approach : Create a lookup table for the max value after an index by reverse enumerating through the prices array. Use previous values(memoization) to add a new max value to the table. Loop through the array again and
+ Time Complexity : O(n) linear run time, O(2n) calculations
+ Space Complexity : O(n)
+*/
+func maxProfit(_ prices: [Int]) -> Int {
+    let count = prices.count
+    var maxDict : [Int : Int] = [:]
+    var min = Int.max
+    var ans = 0
+    for (index,num) in prices.enumerated().reversed(){
+        if index == count-1 {
+            maxDict[index] = num
+            continue
+        }
+        let prevMax = maxDict[index+1]!
+        maxDict[index] = num > prevMax ? num : prevMax
+        
+    }
+    for (index,num) in prices.enumerated(){
+        min = num < min ? num : min
+        let profit = maxDict[index]! - min
+        ans = profit > ans ? profit : ans
+    }
+    return ans
+}
+maxProfit([7,1,5,3,6,4])
 
 /*
  136. Single Number
@@ -67,4 +136,3 @@ func singleNumber(_ nums: [Int]) -> Int {
 }
 let nums = [1,5,6,5,6,3,1]
 //let singleNum = singleNumber(nums)
-
