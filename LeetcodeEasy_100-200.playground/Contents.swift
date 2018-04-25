@@ -57,7 +57,7 @@ func generate(numRows : Int) -> [[Int]]{
  ans = n - max[2,3,4,5]
  return ans
  
- Time complexity : O(n!). Finding the max of the subarray over and over within a for loop.
+ Time complexity : O(n^2). Finding the max of the subarray which is O(n) nested within another for loop.
  Space complexity : O(1)
  Note : Fails on edge case where all numbers in a large array where following numbers are all smaller. EX: [1000,999,998...0]
  */
