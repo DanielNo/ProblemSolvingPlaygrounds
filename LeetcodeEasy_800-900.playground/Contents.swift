@@ -39,10 +39,9 @@ func subdomainVisits(_ cpdomains: [String]) -> [String] {
 }
 
 func findSubDomains(domain : String, domainVisits : inout [String : Int]){
-    var subdomains = [String]()
     var domainComponents = domain.components(separatedBy: " ")
     var domainCount = Int(domainComponents[0])!
-    var fullDomain = domainComponents[1]
+    let fullDomain = domainComponents[1]
     var subdomainCount = 0
     for char in domainComponents[1]{
         if char == "." {
@@ -51,29 +50,17 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
     }
     
     let components = fullDomain.components(separatedBy: ".")
-    switch subdomainCount {
-    case 2:
         var allDomains : [String] = []
         allDomains.append(fullDomain)
-        allDomains.append(components[1]+"."+components[2])
-        allDomains.append(components[2])
-        
-        for aDomain in allDomains{
-            if domainVisits[aDomain] == 0 || domainVisits[aDomain] == nil{
-                domainVisits[aDomain] = domainCount
-            }else{
-                domainVisits[aDomain] = domainVisits[aDomain]! + domainCount
-            }
+        if subdomainCount == 2 {
+            allDomains.append(components[1]+"."+components[2])
+            allDomains.append(components[2])
+
         }
-        print(components[0])
-        print(components[1])
-        print(components[2])
-        print(subdomains)
-    default:
-        var allDomains : [String] = []
-        allDomains.append(fullDomain)
-        allDomains.append(components[1])
-        
+        if subdomainCount == 1 {
+            allDomains.append(components[1])
+        }
+    
         for aDomain in allDomains{
             if domainVisits[aDomain] == 0 || domainVisits[aDomain] == nil {
                 domainVisits[aDomain] = domainCount
@@ -81,6 +68,6 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
                 domainVisits[aDomain] = domainVisits[aDomain]! + domainCount
             }
         }
-    }
+    
 }
 subdomainVisits(input2)
