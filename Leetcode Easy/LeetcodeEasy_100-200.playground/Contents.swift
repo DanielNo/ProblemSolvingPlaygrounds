@@ -136,3 +136,29 @@ func singleNumber(_ nums: [Int]) -> Int {
 }
 let nums = [1,5,6,5,6,3,1]
 //let singleNum = singleNumber(nums)
+
+/* 198. House Robber : https://leetcode.com/problems/house-robber/description/
+
+ 
+ */
+
+func rob(_ nums: [Int]) -> Int {
+    var oddHouses : [Int] = []
+    var evenHouses : [Int] = []
+    for (index,num) in nums.enumerated(){
+        let even = (index % 2 == 0)
+        if even{
+            evenHouses.append(num)
+        }else{
+            oddHouses.append(num)
+        }
+        
+    }
+    let evenSum = evenHouses.reduce(0,+)
+    let oddSum = oddHouses.reduce(0,+)
+
+    return evenSum > oddSum ? evenSum : oddSum
+}
+
+
+rob([2,1,1,2])
