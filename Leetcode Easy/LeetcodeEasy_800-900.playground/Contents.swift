@@ -71,3 +71,27 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
     
 }
 subdomainVisits(input2)
+
+/* 832. Flipping an Image
+ Approach : Reverse each array, then run a for loop on each number and perform a bitwise XOR ^ to flip 0 into 1 and 1 into 0
+    1 ^ 1 = 0
+    0 ^ 1 = 1
+ 
+ Time Complexity : O(n) Although we have nested for loops, execution will be O(n) because we are only iterating through all elements of the array.
+ Space Complexity : O(1), using an extra array pointer here because function parameters in swift are immutable unless marked inout.
+ 
+ */
+
+func flipAndInvertImage(_ A: [[Int]]) -> [[Int]] {
+    var nums = A
+    for (i,arr) in nums.enumerated(){
+        for (j,num) in arr.reversed().enumerated(){
+            nums[i][j] = num ^ 1
+        }
+    }
+    return nums
+}
+let case1 = [[1,1,0],[1,0,1],[0,0,0]]
+let case2 = [[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]
+
+flipAndInvertImage(case1)
