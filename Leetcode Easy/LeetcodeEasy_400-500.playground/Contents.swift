@@ -5,7 +5,7 @@ import UIKit
 /*
  448. Find All Numbers Disappeared in an Array
 
- Brute force : Loop through the array, check every number and see if it exists, if not add to answer array
+ Naive Approach : Loop through the array, check every number and see if it exists, if not add to answer array
  Time complexity : O(n^2) , array.contains is a linear operation and it is nested within a for loop
  Space complexity : O(1)
  */
@@ -27,7 +27,7 @@ func findDisappearedNumbersNaive(_ nums: [Int]) -> [Int] {
 }
 
 /*
- Approach : *Because the function declaration on leetcode does not allow me to mutate the input array, I must copy the array to a mutable array first. If I can change the function declaration, I would mark the array parameter as inout. I will assume the copied mutable array does not count towards extra space*
+ Better Approach : *Because the function declaration on leetcode does not allow me to mutate the input array, I must copy the array to a mutable array first. If I can change the function declaration, I would mark the array parameter as inout. I will assume the copied mutable array does not count towards extra space*
  
  Values in the array fall within a range limited by the size of the array. Because of this, we can mark numbers at index of a seen value as negative.
  
@@ -54,3 +54,30 @@ func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
     return ans
 }
 findDisappearedNumbers(input1)
+
+/*
+ 485. Max Consecutive Ones
+ Approach : Keep track of the count of consecutive 1's. Keep track of greatest count of consecutive 1's. If the current number of consecutive 1's is greater than the greatest consecutive 1's, assign the current to greatest.
+ Time Complexity : O(n)
+ Space Complexity : O(1)
+ */
+
+func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
+    var greatest = 0
+    var oneCount = 0
+    for num in nums{
+        if num == 1{
+            oneCount += 1
+        }else{
+            if oneCount > greatest{
+                greatest = oneCount
+            }
+            oneCount = 0
+        }
+    }
+    if oneCount > greatest{
+        greatest = oneCount
+    }
+    return greatest
+}
+

@@ -105,7 +105,7 @@ func largeGroupPositions(_ S: String) -> [[Int]] {
                 ans.append([currentIndex,index])
             }
         }
-        print("\(current) : \(currentCount)")
+//        print("\(current) : \(currentCount)")
     }
     return ans
 }
@@ -114,7 +114,7 @@ let large1 = "abbxxxxzzy"
 let large2 = "abc"
 let large3 = "abcdddeeeeaabbbcd"
 //largeGroupPositions(large0)
-//largeGroupPositions(large1)
+largeGroupPositions(large1)
 //largeGroupPositions(large2)
 //largeGroupPositions(large3)
 
