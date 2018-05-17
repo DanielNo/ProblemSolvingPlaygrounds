@@ -72,6 +72,52 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
 }
 subdomainVisits(input2)
 
+/* 830. Positions of Large Groups
+
+ Time Complexity : O(n)
+ Space Complexity : O(1)
+ */
+
+func largeGroupPositions(_ S: String) -> [[Int]] {
+    let count = S.count
+    var ans = [[Int]]()
+    if count < 3{
+        return ans
+    }
+    var current = String(S.characters.first!)
+    var currentCount = 0
+    var currentIndex = 0
+    for (index,char) in S.enumerated(){
+        let c = String(char)
+        if c == current{
+         currentCount += 1
+        }else{
+            if currentCount >= 3 {
+                ans.append([currentIndex,index-1])
+            }
+            currentCount = 1
+            currentIndex = index
+            current = c
+        }
+        
+        if index == count-1{
+            if currentCount >= 3 {
+                ans.append([currentIndex,index])
+            }
+        }
+        print("\(current) : \(currentCount)")
+    }
+    return ans
+}
+let large0 = "aaa"
+let large1 = "abbxxxxzzy"
+let large2 = "abc"
+let large3 = "abcdddeeeeaabbbcd"
+//largeGroupPositions(large0)
+//largeGroupPositions(large1)
+//largeGroupPositions(large2)
+//largeGroupPositions(large3)
+
 /* 832. Flipping an Image
  Approach : Reverse each array, then run a for loop on each number and perform a bitwise XOR ^ to flip 0 into 1 and 1 into 0
     1 ^ 1 = 0
