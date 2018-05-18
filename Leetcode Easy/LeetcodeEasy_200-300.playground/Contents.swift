@@ -1,4 +1,65 @@
 import UIKit
+/* 204. Count Primes : https://leetcode.com/problems/count-primes/description/
+ Count the number of prime numbers less than a non-negative number, n.
+ Approach : Use sieve of eranthoses algorithm to mark off composite numbers in an array until the remaining numbers in array are prime.
+ */
+func countPrimes(_ n: Int) -> Int {
+    if n <= 2{
+        return 0
+    }
+    var arr = Array(repeating: true, count: n)
+    arr[0] = false
+    arr[1] = false
+    arr[2] = true
+    var test = 1
+    var limit = Int(Double(n).squareRoot())
+    while test <= limit{
+        // find next prime and mark off all
+        let prime = findNextPrime(arr, primeIndex:test)
+        //        print("prime found at index: \(prime), test : \(test)")
+        markBoolean(array: &arr, num: prime)
+        if prime > test {
+            test = prime + 1
+        }else{
+            test += 1
+        }
+    }
+    var count = 0
+    //    var primes = [Int]()
+    for (index,val) in arr.enumerated(){
+        if val == true {
+            count += 1
+            //            primes.append(index)
+        }
+    }
+    //    print(primes)
+    //    print(arr)
+    return count
+}
+
+// Get next prime number index in array
+func findNextPrime(_ nums : [Bool], primeIndex : Int) -> Int{
+    var pIndex = primeIndex
+    for index in primeIndex...nums.count{
+        if(nums[index] == true){
+            pIndex = index
+            break
+        }
+    }
+    return pIndex
+}
+
+// Mark all values that are factors of num as a boolean value
+func markBoolean( array : inout [Bool], num : Int) -> [Bool]{
+    var count = num + num
+    //    print("marking \(num)")
+    while (count < array.count){
+        array[count] = false
+        count += num
+    }
+    return array
+}
+
 
 /* 268. Missing Number
  Approach : To get the answer in linear time and without extra space, get the sum of the values in the input array.
