@@ -137,6 +137,30 @@ func singleNumber(_ nums: [Int]) -> Int {
 let nums = [1,5,6,5,6,3,1]
 //let singleNum = singleNumber(nums)
 
+/* 167. Two Sum II - Input array is sorted
+ Three solutions : Two pointers, nested for loops, hash
+ */
+
+func twoSumPointers(_ numbers: [Int], _ target: Int) -> [Int] {
+    
+    
+}
+
+func twoSumNaive(_ numbers: [Int], _ target: Int) -> [Int] {
+    let count = numbers.count
+    var ans = [Int]()
+    for i in 0..<count{
+        for j in i+1..<count{
+            if numbers[i] + numbers[j] == target {
+                ans = [i+1,j+1]
+                break
+            }
+        }
+    }
+    return ans
+}
+
+
 /* 198. House Robber : https://leetcode.com/problems/house-robber/description/
 
  

@@ -1,5 +1,25 @@
 import UIKit
 
+/* 268. Missing Number
+ Approach : To get the answer in linear time and without extra space, get the sum of the values in the input array.
+ Then take the sum of 1...n and return the difference of the two to find the missing number.
+ 
+ Time Complexity : O(n)
+ Space Complexity : O(1)
+ 
+ */
+
+func missingNumber(_ nums: [Int]) -> Int {
+    let total = nums.reduce(0, +)
+    let count = nums.count
+    var sum = 0
+    for num in 1...count{
+        sum += num
+    }
+    return sum - total
+}
+
+
 /*
  283. Move Zeroes
 
