@@ -2,6 +2,38 @@
 
 import UIKit
 
+/* 404. Sum of Left Leaves
+ Approach : Recursively add left *Leaves* using a helper function. Leaves do not have any children.
+ Time Complexity : O(n)
+ Space Complexity : O(h) where h is the height of the tree.
+ */
+
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+func sumOfLeftLeaves(_ root: TreeNode?) -> Int {
+    return sumLeft(root?.left, true) + sumLeft(root?.right, false)
+}
+
+func sumLeft(_ node: TreeNode?, _ isLeft : Bool) -> Int{
+    if(node == nil){
+        return 0
+    }
+    if(node?.left == nil && node?.right == nil){
+        return isLeft ? node!.val : 0
+    }
+    return sumLeft(node?.left, true) + sumLeft(node?.right, false)
+    
+}
+
 /*
  448. Find All Numbers Disappeared in an Array
 
