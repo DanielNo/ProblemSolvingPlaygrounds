@@ -2,6 +2,26 @@
 
 import UIKit
 
+/* 344. Reverse String
+ Approach : Solutions : Two pointers and swap in place. Reverse iterate the string and append characters to new string.
+ 
+ */
+
+func reverseString(_ s: String) -> String {
+    var str = Array(s)
+    var j = str.count - 1
+    var i = 0
+    while j >= i{
+        let temp = str[i]
+        str[i] = str[j]
+        str[j] = temp
+        j-=1
+        i+=1
+    }
+    return String(str)
+}
+reverseString("hello")
+
 /*
  387. First Unique Character in a String
  

@@ -55,6 +55,27 @@ func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
 }
 findDisappearedNumbers(input1)
 
+/* 476. Number Complement
+ Approach : Convert the int to binary. Flip the binary number using XOR 1 and return it.
+ Time complexity : O(n)
+ Space Complexity : O(n)
+ 
+ */
+func findComplement(_ num: Int) -> Int {
+    let str = String(num, radix: 2)
+    var ans = 0
+    var current = 1
+    for (i,char) in str.reversed().enumerated(){
+        let val = Int(String(char))!
+        let flipped = val ^ 1
+        ans += flipped * current
+        current = current * 2
+        
+    }
+    return ans
+}
+
+
 /*
  485. Max Consecutive Ones
  Approach : Keep track of the count of consecutive 1's. Keep track of greatest count of consecutive 1's. If the current number of consecutive 1's is greater than the greatest consecutive 1's, assign the current to greatest.

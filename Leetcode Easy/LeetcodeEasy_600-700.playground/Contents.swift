@@ -2,6 +2,55 @@
 
 import UIKit
 
+/* 617. Merge Two Binary Trees
+ Approach : Use Depth first Search to check the root node, then left and right subtrees using recursion.
+ Time Complexity : O(n)
+ Space Complexity : O(h) where h is the height of the tree
+ */
+
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+func mergeTrees(_ t1: TreeNode?, _ t2: TreeNode?) -> TreeNode? {
+    
+    if t1 == nil && t2 != nil{
+        print("\(t2?.val)")
+
+        return t2
+    }else if(t1 != nil && t2 == nil){
+        print("\(t1?.val)")
+        return t1
+    }else if(t1 == nil && t2 == nil){
+        return nil
+    }
+    print("\(t1?.val) \(t2?.val)")
+    var root = TreeNode(t1!.val + t2!.val)
+    root.left = mergeTrees(t1?.left, t2?.left)
+    root.right = mergeTrees(t1?.right, t2?.right)
+    
+    return root
+}
+
+var tree1 = TreeNode(1)
+tree1.left = TreeNode(2)
+tree1.right = TreeNode(2)
+tree1.left?.left = TreeNode(3)
+tree1.right?.left = TreeNode(3)
+tree1.left?.right = TreeNode(3)
+tree1.right?.right = TreeNode(3)
+var tree2 = TreeNode(1)
+tree2.left = TreeNode(2)
+tree2.right = TreeNode(2)
+mergeTrees(tree1, tree2)
+
 /* 682. Baseball Game
 
  
