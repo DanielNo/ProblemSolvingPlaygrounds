@@ -21,8 +21,9 @@ let test = sortedLinkedlist.head
 let test2 = test?.reverseList(test)
 
 
-var l1 = SinglyLinkedList(nums: [1,2,4])
+var l1 = SinglyLinkedList(nums: [1,2,4,7])
 var l2 = SinglyLinkedList(nums: [1,3,4])
-var merged = SinglyLinkedList.mergeTwoLists(l1.head, l2.head)
 
-let num = Node(num: 11)
+
+let reversed = l1.reverseTwoPointers()
+

@@ -301,6 +301,22 @@ public class SinglyLinkedList : CustomStringConvertible{
         }
         return false
     }
+    
+    public func reverseTwoPointers() -> SinglyLinkedList?{
+        
+        var prev : Node? = nil
+        var curr : Node? = nil
+        var fast = self.head
+        
+        while fast != nil{
+            prev = curr
+            curr = fast
+            fast = fast?.next
+            curr?.next = prev
+        }
+        self.head = curr
+        return self
+    }
 
     
 }
