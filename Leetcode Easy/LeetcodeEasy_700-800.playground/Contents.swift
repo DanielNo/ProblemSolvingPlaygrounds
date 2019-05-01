@@ -2,6 +2,36 @@
 
 import UIKit
 /*
+709. To Lower Case
+ Approach : Check if character's unicode value falls in range of A to Z. If so, add 32 which is the difference between character cases and overwrite character in the character array.
+ Time complexity : o(n)
+ space complexity : o(n) because I can't mutate given string and need to make a mutable character array using string parameter.
+ 
+ Note : Difference between Capital and lower case ASCII values is 32. Be careful of optional values!
+*/
+
+func toLowerCase(_ str: String) -> String {
+    var string = Array(str)
+    for (i,char) in string.enumerated(){
+        if let val = UnicodeScalar(String(char))?.value{
+            if (val >= 65 && val <= 90){
+                if let lowerVal = UnicodeScalar(val + 32){
+                    string[i] = Character(lowerVal)
+                }
+            }
+        }
+    }
+    return String(string)
+}
+
+let a = UnicodeScalar("a")
+let z = UnicodeScalar("z")
+let A = UnicodeScalar("A")
+let Z = UnicodeScalar("Z")
+
+let ans = toLowerCase("HELLO")
+
+/*
 747. Largest Number At Least Twice of Others
 
  Approach : Find the first and second largest numbers. Keep track of the greatest index. Compare first being at least twice as large as second, return greatest index or -1. Don't have to check edge case of nums.count being empty as specified by reading the question carefully.

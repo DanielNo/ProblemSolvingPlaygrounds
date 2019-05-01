@@ -2,6 +2,32 @@
 
 import UIKit
 
+/* 27. Remove Element
+ Example 1:
+ 
+ Given nums = [3,2,2,3], val = 3,
+ 
+ Your function should return length = 2, with the first two elements of nums being 2.
+ It doesn't matter what you leave beyond the returned length.
+ Example 2:
+ 
+ Given nums = [0,1,2,2,3,0,4,2], val = 2,
+ 
+ Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
+ */
+
+var arrCase1 = [3,2,2,3]
+var arrCase2 = [0,1,2,2,3,0,4,2]
+var arrCase3 = [3,3]
+var arrCase4 = [3,3,3]
+
+func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+    return 0
+}
+//removeElement(&arrCase1, 3)
+removeElement(&arrCase2, 2)
+//removeElement(&arrCase3, 3)
+
 /*
 53. Maximum Subarray
  Input: [-2,1,-3,4,-1,2,1,-5,4],
@@ -67,7 +93,6 @@ func maxSubArray(_ nums: [Int]) -> Int {
         let subArray = nums[0...index]
         let sum = subArray.reduce(0, +)
         localMax = sum > nums[index] ? sum : nums[index]
-        print(localMax)
         
         
         
