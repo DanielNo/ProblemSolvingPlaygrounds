@@ -13,8 +13,8 @@ func distributeContent(arr1 : [String],arr2 : [String], arr3 : [String],size : I
     var iteration = 0
     for x in 0..<greatest{
         for y in 0..<full.count{
-            iteration += 1
             if x < full[y].count {
+                iteration += 1
                 topStories.append(full[y][x])
                 if iteration == size{
                     print("iterations : \(iteration)")
@@ -48,6 +48,7 @@ let edgeCase1 = distributeContent(arr1: edge1, arr2: edge2, arr3: edge3, size: -
 
 let edge4 : [String] = Array()
 let edgeCase2 = distributeContent(arr1: edge4, arr2: edge4, arr3: edge4, size: 10)
+let edgeCase5 = distributeContent(arr1: edge4, arr2: edge4, arr3: case1, size: 10)
 
 
 let edge5 = ["a"]
@@ -55,6 +56,4 @@ let edge6 = ["b","d"]
 let edge7 = ["c","e","f"]
 let edgeCase3 = distributeContent(arr1: edge5, arr2: edge6, arr3: edge7, size: 10)
 let edgeCase4 = distributeContent(arr1: edge7, arr2: edge6, arr3: edge5, size: 10)
-
-
 
