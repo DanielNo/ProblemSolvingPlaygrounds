@@ -3,29 +3,27 @@ func distributeContent(arr1 : [String],arr2 : [String], arr3 : [String],size : I
     if size <= 0{
         return [String]()
     }
-    var greatest = 0
     var full = [arr1,arr2,arr3]
-    var ans : [String] = Array()
-
-    full.map { arr in
-        if arr.count > greatest {
-            greatest = arr.count
-        }
+    full.sort { (a, b) -> Bool in
+        return a.count > b.count
     }
+    let greatest = full.first?.count ?? 0
+    
+    var topStories : [String] = Array()
     var iteration = 0
     for x in 0..<greatest{
         for y in 0..<full.count{
             iteration += 1
             if x < full[y].count {
-                ans.append(full[y][x])
+                topStories.append(full[y][x])
                 if iteration == size{
                     print("iterations : \(iteration)")
-                 return ans
+                 return topStories
                 }
             }
         }
     }
-    return ans
+    return topStories
 }
 
 
