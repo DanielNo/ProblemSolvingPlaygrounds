@@ -1,4 +1,45 @@
 import UIKit
+/*
+1221. Split a String in Balanced Strings
+
+Balanced strings are those who have equal quantity of 'L' and 'R' characters.
+Given a balanced string s split it in the maximum amount of balanced strings.
+Return the maximum amount of splitted balanced strings.
+
+Example 1:
+
+Input: s = "RLRRLLRLRL"
+Output: 4
+Explanation: s can be split into "RL", "RRLL", "RL", "RL", each substring contains same number of 'L' and 'R'.
+ 
+ Initial thoughts : Clueless, had to look at answer. Will implement the solution at least for practice.
+ 
+ Approach : Use a greedy algorithm which obtains an answer at each local step of the problem.
+ 
+ Time : O(n)
+ Space : O(1)
+ 
+*/
+
+func balancedStringSplit(_ s: String) -> Int {
+    var ans = 0
+    var count = 0
+    for (index,char) in s.enumerated(){
+        if char == "R"{
+            count += 1
+        }else if char == "L"{
+            count -= 1
+        }
+        if count == 0{
+            ans+=1
+        }
+    }
+    
+    return ans
+}
+
+balancedStringSplit("RLLLLRRRLR")
+
 
 /*
 1281. Subtract the Product and Sum of Digits of an Integer
@@ -23,6 +64,30 @@ func subtractProductAndSum(_ n: Int) -> Int {
     }
     return product - sum
 }
+
+/*
+ 1290. Convert Binary Number in a Linked List to Integer
+ Approach 1 (wrong): Keep track of binary val and * 2. Add to sum and return.
+ 
+ Approach (cheating) : Bitwise operation, this should have been an obvious choice for bitwise operations, need to refresh on bitwise operators for the future.
+ 
+ */
+
+// Wrong first attempt
+func getDecimalValueWrong(_ head: ListNode?) -> Int {
+    var ptr = head
+    var count = 0
+    var base = 1
+    
+    
+    while ptr != nil{
+        let num = base * ptr!.val
+        count += num
+        ptr = ptr?.next
+    }
+    return count
+}
+
 
 /*
 1295. Find Numbers with Even Number of Digits
