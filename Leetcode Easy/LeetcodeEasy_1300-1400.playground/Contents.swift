@@ -1,6 +1,71 @@
 import UIKit
 
 /*
+ 1351. Count Negative Numbers in a Sorted Matrix
+
+ Approach 1: Linear scan on all elements of arrays
+ 
+ Approach 2: Binary search on each array. Why is this slower on leetcode than linear scan?
+ 
+ Approach 3: Scan each array from right side until you hit a positive number.
+ */
+
+func countNegatives(_ grid: [[Int]]) -> Int {
+    var count = 0
+    
+    var arrCount = grid.count
+    var eleCount = grid[0].count ?? 0
+    
+    for i in 0..<arrCount{
+        
+        for j in (0..<eleCount).reversed(){
+            if grid[i][j] < 0{
+                count+=1
+                print(grid[i][j])
+            }else{
+                break
+            }
+        }
+        
+    }
+    
+    
+    return count
+
+}
+countNegatives([[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]])
+
+func countNegativesBinarySearch(_ grid: [[Int]]) -> Int {
+    var count = 0
+    for (index,arr) in grid.enumerated(){
+        count += binarySearch(arr)
+    }
+    
+    return count
+}
+
+func binarySearch(_ arr : [Int]) -> Int{
+    let count = arr.count
+    if count == 1{
+        let num = arr[0]
+        return num >= 0 ? 1 : 0
+    }
+    let mid = count/2
+    let first = Array(arr[0..<mid])
+    let second = Array(arr[mid...count-1])
+    if arr[mid-1] >= 0{
+        return binarySearch(second)
+    }else if (arr[count-1] >= 0){
+        return 0
+    }else{
+        return binarySearch(first) + binarySearch(second)
+    }
+    
+}
+
+//countNegatives([[3,2],[1,0]])
+//countNegatives([[5,1,0],[-5,-5,-5]])
+/*
 1365. How Many Numbers Are Smaller Than the Current Number
  Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it. That is, for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
 

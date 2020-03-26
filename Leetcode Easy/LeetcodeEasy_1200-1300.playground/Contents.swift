@@ -40,6 +40,29 @@ func balancedStringSplit(_ s: String) -> Int {
 
 balancedStringSplit("RLLLLRRRLR")
 
+/*
+ 1266. Minimum Time Visiting All Points
+
+ Approach 1: Use a greedy algorithm to travel diagonally until you cant. Find the difference in coordinates with consideration to negative and positive coords. The number of total moves between two coordinate sets, will be the greater value of the x and y coordinate differences. 
+ 
+ */
+
+func minTimeToVisitAllPoints(_ points: [[Int]]) -> Int {
+    var prev : [Int] = []
+    var ans = 0
+    
+    for (index,pt) in points.enumerated(){
+        if index != 0 {
+            let xDiff = abs(prev[0] - pt[0])
+            let yDiff = abs(prev[1] - pt[1])
+            let greaterVal = xDiff > yDiff ? xDiff : yDiff
+            ans += greaterVal
+        }
+        prev = pt
+    }
+    return ans
+}
+
 
 /*
 1281. Subtract the Product and Sum of Digits of an Integer
