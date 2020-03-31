@@ -43,7 +43,7 @@ balancedStringSplit("RLLLLRRRLR")
 /*
  1266. Minimum Time Visiting All Points
 
- Approach 1: Use a greedy algorithm to travel diagonally until you cant. Find the difference in coordinates with consideration to negative and positive coords. The number of total moves between two coordinate sets, will be the greater value of the x and y coordinate differences. 
+ Approach 1: Use a greedy algorithm to travel diagonally until you cant. Find the difference in coordinates with consideration to negative and positive coords. The number of total moves between two coordinate sets, will be the greater value of the x and y coordinate differences.
  
  */
 

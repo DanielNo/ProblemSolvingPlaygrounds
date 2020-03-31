@@ -1,6 +1,40 @@
 import UIKit
 
 /*
+ 1304. Find N Unique Integers Sum up to Zero
+
+ Approach: Append a number and its negative value for even input. For odd input, do the same with the difference of appending a zero for the last index. Could possibly optimize a bit further but I was able to find a solution without cheating.
+ 
+ Time : O(n)
+ Space : O(n) needed for the answer array.
+ */
+ 
+func sumZero(_ n: Int) -> [Int] {
+    var ans : [Int] = Array(repeating: 0, count: n)
+    var count = n
+    for num in 0..<n{
+        if num == n-1{
+            if num % 2 == 0 {
+                ans[num] = 0
+            }else{
+                ans[num] = count * -1
+            }
+            
+        }else{
+            if num % 2 == 0{
+                ans[num] = count
+            }else{
+                ans[num] = count * -1
+                count -= 1
+            }
+        }
+    }
+    return ans
+}
+
+sumZero(3)
+sumZero(9)
+/*
  1351. Count Negative Numbers in a Sorted Matrix
 
  Approach 1: Linear scan on all elements of arrays
@@ -21,7 +55,6 @@ func countNegatives(_ grid: [[Int]]) -> Int {
         for j in (0..<eleCount).reversed(){
             if grid[i][j] < 0{
                 count+=1
-                print(grid[i][j])
             }else{
                 break
             }
@@ -100,7 +133,6 @@ func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
     for (index,num) in nums.enumerated(){
         counts[num]+=1
     }
-    print(counts)
     
     // add up value with previous index
     for (index,num) in counts.enumerated(){
@@ -110,7 +142,6 @@ func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
             counts[index]+=counts[index-1]
         }
     }
-    print(counts)
 
     for (index,element) in ans.enumerated() {
         if index == 0{
@@ -119,11 +150,109 @@ func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
             ans[index] = ans[element-1]
         }
     }
-    print(counts)
     return ans
 }
 smallerNumbersThanCurrent([8,1,2,2,3])
 //smallerNumbersThanCurrent([1,4,1,2,7,5,2])
+
+/*
+1374. Generate a String With Characters That Have Odd Counts
+ 
+ Given an integer n, return a string with n characters such that each character in such string occurs an odd number of times.
+ The returned string must contain only lowercase English letters. If there are multiples valid strings, return any of them.
+ Input: n = 4
+ Output: "pppz"
+ Explanation: "pppz" is a valid string since the character 'p' occurs three times and the character 'z' occurs once. Note that there are many other valid strings such as "ohhh" and "love".
+
+ Approach : Find if the number is even or odd. Create a string based on even or odd.
+ Result : Accepted without cheating. Leetcode solutions look similiar to my answer.
+ 
+*/
+
+func generateTheString(_ n: Int) -> String {
+    if n == 1{
+        return "a"
+    }
+    let isEven = n%2 == 0 ? true : false
+    
+    if isEven{
+        let first = n - 1
+        var str = String(Array(repeating: "a", count: first))
+        str.append("b")
+        return str
+    }else{
+        let first = n - 2
+        var str = String(Array(repeating: "a", count: first))
+        str.append("bc")
+        return str
+    }
+}
+
+
+/*
+ 1380. Lucky Numbers in a Matrix
+ Given a m * n matrix of distinct numbers, return all lucky numbers in the matrix in any order.
+
+ A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
+ Constraints:
+
+ m == mat.length
+ n == mat[i].length
+ 1 <= n, m <= 50
+ 1 <= matrix[i][j] <= 10^5.
+ All elements in the matrix are distinct.
+
+ 
+ Intial approach : Find the minimum element in a row of the matrix. For that minimum element's index, do a scan to see if its the minimum.
+ 
+ Optimized approach : Mark the elements in a row as -1 if it is not the minimum elements. Do a second pass on the matrix and look for values that are not -1. For each of those values, scan the columns to see if it is the greatest elements and append to answer array. This should be an O(n) solution with no additional space, two linear scans through the arrays
+ */
+
+func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
+    var nums = matrix
+    var ans : [Int] = Array()
+    for (i,row) in nums.enumerated(){
+        var min = Int.max
+        var minIndex = 0
+        for (j,num) in row.enumerated(){
+            if num < min{
+                min = num
+                minIndex = j
+            }else{
+                nums[i][j] = -1
+            }
+        }
+    }
+    let height = nums.count
+    let width = nums.first?.count ?? 0
+    for x in 0..<width-1{
+        
+        for y in 0..<height-1{
+            let next = x+1
+            print("\(nums[x][y]) > \(nums[next][y])")
+
+            if nums[x][y] > nums[next][y]{
+                nums[x][next] = -1
+            }else{
+                nums[x][y] = -1
+            }
+        }
+    }
+    
+    for (_,row) in nums.enumerated(){
+        for (_,num) in row.enumerated(){
+            if num != -1{
+                ans.append(num)
+            }
+        }
+    }
+    
+    print(nums)
+    return ans
+}
+
+//luckyNumbers([[3,7,8],[9,11,13],[15,16,17]])
+//luckyNumbers([[1,10,4,2],[9,3,8,7],[15,16,17,12]])
 
 /*
 1389. Create Target Array in the Given Order
