@@ -33,3 +33,30 @@ func sortArrayByParity(_ A: [Int]) -> [Int] {
 }
 sortArrayByParity([3,1,2,4,6,9,4,2,1,0,7])
 //sortArrayByParity([1,3])
+
+/*
+ 961. N-Repeated Element in Size 2N Array
+ In a array A of size 2N, there are N+1 unique elements, and exactly one of these elements is repeated N times.
+ Return the element repeated N times.
+
+ Example 1:
+ Input: [1,2,3,3]
+ Output: 3
+ 
+ Approach : Use a set. Because there are N+1 unique elements, this means all are unique minus the element that is repeated. Use a set to find the duplicate. Ex : 2N array where n = 2, array count = 4 and unique elements = 3 where 1 of the three elements is repeated twice (n times)
+ Time : O(n)
+ Space : O(n)
+
+ */
+func repeatedNTimes(_ A: [Int]) -> Int {
+    var set : Set<Int> = Set()
+    for (i,num) in A.enumerated(){
+        if set.contains(num){
+            return num
+        }else{
+            set.insert(num)
+        }
+    }
+    return 0
+}
+

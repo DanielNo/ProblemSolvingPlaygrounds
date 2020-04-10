@@ -32,8 +32,34 @@ func sumZero(_ n: Int) -> [Int] {
     return ans
 }
 
+
 sumZero(3)
 sumZero(9)
+
+/*
+ 1323. Maximum 69 Number
+
+ Approach 1: Convert number to character array, then int array. Find the first and leftmost 6
+ 
+ Approach 2: Do math on the input number, finding the leftmost 6 and changing to a 9. Tried to find a loop algorithm that would work using exponents but the pow function returns a "Decimal" type number instead of Int.
+ Had to cheat here but the solution was extremely simple. Should have thought of it on my own due to the very small constraints.
+ 
+ */
+func maximum69Number (_ num: Int) -> Int {
+    if num/1000 == 6{
+        return num + 3000
+    }else if (num/100 % 10 == 6){
+        return num + 300
+    }else if(num/10 % 10 == 6){
+        return num + 30
+    }else if(num % 10 == 6){
+        return num + 3
+    }else{
+        return num
+    }
+}
+
+maximum69Number(6969)
 /*
  1351. Count Negative Numbers in a Sorted Matrix
 

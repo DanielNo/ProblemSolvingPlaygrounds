@@ -137,3 +137,40 @@ func findNumbers(_ nums: [Int]) -> Int {
     return even
 }
 
+/*
+ 1299. Replace Elements with Greatest Element on Right Side
+ Given an array arr, replace every element in that array with the greatest element among the elements to its right, and replace the last element with -1.
+ After doing so, return the array.
+
+ Example 1:
+ Input: arr = [17,18,5,4,6,1]
+ Output: [18,6,6,6,1,-1]
+ 
+ Approach : Iterate through the array in reverse, keeping track of the greatest element. Assign arr[i] to the current greatest element.
+ Result: Took a few submissions after running code but was solvable. Should practice doing questions correctly in one submission. TODO: Try solving with a mutable input array. After cheating, this can be accomplished using a temp variable.
+ Time : O(n)
+ Space : O(n) due to requiring a copy of the array. Leetcode does not support inout on input array...
+
+ */
+func replaceElements(_ arr: [Int]) -> [Int] {
+    var ans = arr
+    let count = arr.count
+    if count == 1{
+        return [-1]
+    }
+    var greatest = -1
+    for i in (0..<count).reversed(){
+        if i == count-1{
+            greatest = arr[i]
+            ans[i] = -1
+        }else{
+            ans[i] = greatest
+            if arr[i] > greatest{
+                greatest = arr[i]
+            }
+        }
+        
+    }
+    return ans
+}
+
