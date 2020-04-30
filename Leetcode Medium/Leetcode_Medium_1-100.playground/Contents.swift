@@ -118,3 +118,116 @@ let test4 = ListNode([5,6,4])
 let ans2 = addTwoNumbers(test3, test4)
 ans2?.desc()
 
+
+ public class TreeNode {
+     public var val: Int
+     public var left: TreeNode?
+     public var right: TreeNode?
+     public init(_ val: Int) {
+         self.val = val
+         self.left = nil
+         self.right = nil
+     }
+ }
+
+var treeAns : [Int] = Array()
+
+/*
+94. Binary Tree Inorder Traversal
+ Approach 1 : recursion
+ Approach 2 :
+ Code copied from tushar youtube video to understand morris traversal.
+ Morris traversal, which mutates the binary tree and creates links between rightmost child in left subtree of a node to itself. Continues going left until left child is null.
+ 
+ 
+ TODO : Try problem again after fully understanding morris traversal.
+ 
+ */
+func inorderTraversal(_ root: TreeNode?) -> [Int] {
+    traverse(root)
+    return treeAns
+}
+
+func traverse(_ root: TreeNode?) -> [Int]{
+    var curr = root
+    var arr : [Int] = Array()
+    while curr != nil{
+        if curr?.left == nil{
+            arr.append(curr!.val)
+            curr = curr?.right
+        }else{
+            var predecessor = findRightPredecessor(node: curr)
+            if predecessor?.right == nil{
+                predecessor?.right = curr
+                curr = curr?.left
+                
+            }else{
+                predecessor?.right = nil
+                arr.append(curr!.val)
+                curr = curr?.right
+            }
+
+        }
+    }
+    
+    
+    return arr
+}
+
+func findRightPredecessor(node : TreeNode?) -> TreeNode?{
+    var pred : TreeNode? = node?.left
+    while pred?.right != nil && (pred?.right !== node) {
+        pred = pred?.right
+    }
+    return pred
+}
+
+let tree = TreeNode(8)
+tree.left = TreeNode(4)
+tree.right = TreeNode(9)
+tree.left?.left = TreeNode(2)
+tree.left?.right = TreeNode(6)
+tree.left?.left?.left = TreeNode(1)
+tree.left?.left?.right = TreeNode(3)
+tree.left?.right?.left = TreeNode(5)
+tree.left?.right?.right = TreeNode(7)
+
+traverse(tree)
+
+//let x = findRightPredecessor(node: tree)
+
+/*
+    36. Valid Sudoku
+ 
+ Approach (initial thoughts): Validate every row and column and cube in a seperate hash set of characters
+ 
+ Approach(cheating from nick white video): Create a single set of strings that contains row,column and cube identifiers
+ - Was fairly simple to code out.
+ 
+ Time Complexity : O(n * m)
+ Space Complexity : O(n * m)
+ */
+
+func isValidSudoku(_ board: [[Character]]) -> Bool {
+    var seen : Set<String> = Set()
+    for (i,row) in board.enumerated(){
+        for(j,col) in row.enumerated(){
+            let str = board[i][j]
+            if str == "."{
+                continue
+            }
+            let r = "\(str),row \(i)"
+            let c = "\(str),col \(j)"
+            let cube = "\(str),cube\(i/3)\(j/3)"
+            if seen.contains(r) || seen.contains(c) || seen.contains(cube){
+                return false
+            }else{
+                seen.insert(r)
+                seen.insert(c)
+                seen.insert(cube)
+            }
+        }
+    }
+        return true
+    }
+
