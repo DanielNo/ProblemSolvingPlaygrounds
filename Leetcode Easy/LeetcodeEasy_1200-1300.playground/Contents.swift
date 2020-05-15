@@ -1,4 +1,41 @@
 import UIKit
+
+/*
+ 1207. Unique Number of Occurrences
+ Given an array of integers arr, write a function that returns true if and only if the number of occurrences of each value in the array is unique.
+
+ Input: arr = [1,2,2,1,1,3]
+ Output: true
+ Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+
+ Approach : Store occurences in a dictionary. Insert the occurences in a set to figure out if occurence is unique or not. Fairly simple, breezed past coding this. Be careful for optional dictionary values when coding without autocomplete and precompile warnings.
+ Time : O(n)
+ Space : O(n)
+ 
+ */
+
+func uniqueOccurrences(_ arr: [Int]) -> Bool {
+    var dict : [Int:Int] = Dictionary()
+    var occ : Set<Int> = Set()
+    for num in arr{
+        if let val = dict[num]{
+            dict[num]=val+1
+        }else{
+            dict[num] = 1
+        }
+    }
+    
+    for val in dict.values{
+        if occ.contains(val){
+            return false
+        }else{
+            occ.insert(val)
+        }
+    }
+    return true
+}
+
+
 /*
 1221. Split a String in Balanced Strings
 
@@ -39,6 +76,51 @@ func balancedStringSplit(_ s: String) -> Int {
 }
 
 balancedStringSplit("RLLLLRRRLR")
+/*
+ 1260. Shift 2D Grid
+ 
+ Approach (no cheating):
+ Find number of shifts by using modulo on total, to reduce repetition if k is greater than total number of elements.
+ Flatten the 2d grid into a single array and create an index value.
+ From the flattened 1d array, take the last k elements and place them into the front.
+ Read values from 1d array and rewrite into the 2d array by using index value.
+ Initial idea worked... but there is likely an more optimal solution
+
+ */
+func shiftGrid(_ grid: [[Int]], _ k: Int) -> [[Int]] {
+    var ans = grid
+    let n = grid.count
+    guard let m = grid.first?.count else{
+        return grid
+    }
+    let total = n * m
+    let shifts = k % total
+    
+    var all = grid.flatMap{
+        $0
+    }
+    
+    var head = all[(total-shifts)..<total]
+    var tail = all[0..<total-shifts]
+    var new = Array(head + tail)
+    for(i,r) in grid.enumerated(){
+        for(j,c) in r.enumerated(){
+            var index = 0
+            if i == 0{
+                index = i+j
+            }else{
+                index = (i * m)+(j)
+            }
+            let val = new[index]
+            print(val)
+            ans[i][j] = new[index]
+        }
+    }
+    return ans
+}
+let grid = [[1,2,3],[4,5,6],[7,8,9]]
+shiftGrid(grid, 7)
+
 
 /*
  1266. Minimum Time Visiting All Points
