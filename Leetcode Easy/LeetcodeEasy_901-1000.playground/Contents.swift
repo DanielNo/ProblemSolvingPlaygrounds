@@ -60,3 +60,30 @@ func repeatedNTimes(_ A: [Int]) -> Int {
     return 0
 }
 
+
+/*
+ 977. Squares of a Sorted Array
+ Look at this problem again..
+ 
+ */
+
+func sortedSquares(_ A: [Int]) -> [Int] {
+    // put in thought process in repo, cheated
+    var arr = Array(repeating:0, count:A.count)
+    var head = 0
+    var tail = A.count-1
+    var pos = A.count-1
+    
+    while (pos >= 0){
+        if (abs(A[head]) >= abs(A[tail])){
+            arr[pos] = A[head] * A[head]
+            head+=1
+        }else{
+            arr[pos] = A[tail] * A[tail]
+            tail-=1
+        }
+        pos-=1
+    }
+    
+    return arr
+}

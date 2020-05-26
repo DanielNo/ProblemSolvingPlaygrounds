@@ -1,6 +1,27 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+
+/*
+ 704. Binary Search
+ 
+ Finish this later
+ */
+
+func search(_ nums: [Int], _ target: Int) -> Int {
+    let count = nums.count
+    if count == 1{
+        return target == nums[0] ? count : 0
+    }else{
+        var first = Array(nums[0..<count/2])
+        var second = Array(nums[count/2..<count])
+        let total = search(first,target) + search(second,target)
+
+    }
+    
+}
+
+search([-1,0,3,5,9,12], -1)
 /*
 709. To Lower Case
  Approach : Check if character's unicode value falls in range of A to Z. If so, add 32 which is the difference between character cases and overwrite character in the character array.
@@ -125,4 +146,29 @@ func numJewelsInStones(_ J: String, _ S: String) -> Int {
         sum += stones[char.element]!
     }
     return sum
+}
+
+
+/*
+796. Rotate String
+ 
+ Note : Tried an inefficent attempt by myself but had to cheat for clever and optimal solution
+ 
+ Solution(cheating explanation) : Because a shift of leftmost char to the right of the string will result in a repetition in sequence. Repeat the first string twice, because it will contain all possible shifts and then we can check for string containment.
+ Ex:
+ A : "abcde" B : "cdeab"
+a = A + A = "abcdeabcde"
+ "abcdeabcde" can be used to check for string containment of "cdeab" which it does contain.
+ 
+ Time : O(n) which is the time complexity of a linear scan through a string (swift's string containment function)
+ Space : O(n) because A + A = 2n space which is equal to O(n)
+ 
+*/
+
+func rotateString(_ A: String, _ B: String) -> Bool {
+    if A.count == 0 && B.count == 0{
+        return true
+    }
+    let a = A + A
+    return a.contains(B) && (A.count == B.count)
 }

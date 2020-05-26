@@ -6,7 +6,7 @@ import UIKit
  118. Pascal's Triangle
  https://leetcode.com/problems/pascals-triangle/description/
  
- Approach : First create a 2d array with the required space beforehand. Initialize all values to 1. Use pattern matching and nested statements to overwrite existing values.
+ Approach 1(long time ago) : First create a 2d array with the required space beforehand. Initialize all values to 1. Use pattern matching and nested statements to overwrite existing values.
  
  Time complexity : Linear O(n)
  Space complexity : Linear O(n)
@@ -43,8 +43,33 @@ func generate(numRows : Int) -> [[Int]]{
     print(triangle)
 
     return triangle
-    
 }
+
+// Recent submission
+func generate2(_ numRows: Int) -> [[Int]] {
+    var ans : [[Int]] = Array()
+    if numRows == 0{
+        return ans
+    }
+    
+    var row = 1
+    while (row <= numRows){
+        // Initialize row of 1's
+        var arr = Array(repeating:1, count: row)
+        ans.append(arr)
+        // If row is not first or second row, calculate values that are not the first and last in row because nothing should be done. Our row is initialized to contain all 1's and we overwrite values that are not edges of the triangle.
+        if row != 1 && row != 2{
+            for n in 0..<arr.count{
+                if n != 0 && n != arr.count-1{
+                 ans[row-1][n] = ans[row-2][n] + ans[row-2][n-1]
+                }
+            }
+        }
+        row += 1
+    }
+    return ans
+}
+
 //let rows = generate(numRows: 4)
 
 /*

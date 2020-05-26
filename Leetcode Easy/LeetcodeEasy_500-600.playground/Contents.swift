@@ -109,4 +109,38 @@ func reverseK(str : String, k : Int) -> String{
 }
 
 reverseK(str: "hello", k: 2)
+/*
+599. Minimum Index Sum of Two Lists
 
+ Approach : Iterate through first list and keep track of restaurant(string) values as key, with index as the value.
+ 
+ Iterate through the second list to find keys that exist in list1 and 2.
+ Calculate the minimum index sum with a variable. If there is a collision in index sums, just append the duplicate to the answer (string array)
+ 
+ Time : O(n)
+ Space : O(n)
+ 
+ */
+
+func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
+    var dict : [String : Int] = Dictionary()
+    
+    for (index,str) in list1.enumerated(){
+        dict[str] = index
+    }
+    var least = Int.max
+    var ans : [String] = Array()
+    for (index,str) in list2.enumerated(){
+        guard let i = dict[str] else{
+            continue
+        }
+        if i + index < least{
+            least = i + index
+            ans = [str]
+        }else if(i + index == least){
+            ans.append(str)
+        }
+    }
+    
+    return ans
+}

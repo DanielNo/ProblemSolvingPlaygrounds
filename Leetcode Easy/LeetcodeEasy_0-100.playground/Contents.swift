@@ -2,6 +2,43 @@
 
 import UIKit
 
+/*
+ 9. Palindrome Number
+ 
+ Approach : Check for value in range 0-9, return true because it is a single digit palindrome.
+ Convert Int to String, then to Character array.
+ Iterate from head and tail using two pointers, compare values until failure or the two pointers pass each other.
+ 
+ Time : O(n) Scan every character in array.
+ Space : O(n) storing character array of the integer
+ */
+
+func isPalindrome(_ x: Int) -> Bool {
+    if x < 0{
+        return false
+    }
+    if x < 10 && x >= 0{
+        return true
+    }
+    
+    let chars = Array(String(x))
+    
+    var i = 0
+    var j = chars.count-1
+    
+    while i < j{
+        if chars[i] == chars[j]{
+            i+=1
+            j-=1
+        }else{
+            return false
+        }
+        
+    }
+    return true
+}
+
+
 /* 27. Remove Element
  Example 1:
  

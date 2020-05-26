@@ -141,3 +141,31 @@ let case1 = [[1,1,0],[1,0,1],[0,0,0]]
 let case2 = [[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]
 
 flipAndInvertImage(case1)
+
+/*
+ 867. Transpose Matrix
+
+ Approach : A transpose is a matrix with it's columns placed as rows
+ Iterate through the matrix, and write the values into a new matrix.
+ 
+ Time : O(n * m) Nested for loop, but we are iterating through every element in the matrix. Where n is number of rows, and m is number of columns
+ Space : O(n * m)
+ 
+ */
+func transpose(_ A: [[Int]]) -> [[Int]] {
+    guard let x = A.first?.count else{
+        return []
+    }
+    let y = A.count
+    
+    var ans : [[Int]] = Array()
+    for i in 0..<x{
+        var arr : [Int] = Array()
+        for j in 0..<y{
+            arr.append(A[j][i])
+        }
+        ans.append(arr)
+    }
+    
+    return ans
+}
