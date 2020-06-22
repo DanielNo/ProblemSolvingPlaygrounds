@@ -23,6 +23,38 @@ func reverseString(_ s: String) -> String {
 reverseString("hello")
 
 /*
+345. Reverse Vowels of a String
+Approach : Use two pointers to find the next vowel going forward and backwards. Swap when both pointers are pointing to a vowel.
+Time : O(n) looping through all characters
+Space : O(n) due to character array copy from original string.
+*/
+
+    func reverseVowels(_ s: String) -> String {
+        let count = s.count
+        if count <= 1{
+            return s
+        }
+        var i = 0
+        var j = count-1
+        let vowels : Set<Character> = ["a","e","i","o","u","A","E","I","O","U"]
+        var str = Array(s)
+        while i < j {
+            if vowels.contains(str[i]) && vowels.contains(str[j]){
+                let temp = str[i]
+                str[i] = str[j]
+                str[j] = temp
+                i+=1
+                j-=1
+            }else if !vowels.contains(str[i]){
+                i+=1
+            }else if !vowels.contains(str[j]){
+                j-=1
+            }
+        }
+        return String(str)
+    }
+
+/*
  387. First Unique Character in a String
  
  Approach : Map counts of characters in dictionary. Traverse the string and return the first dictionary value that has one occurence.

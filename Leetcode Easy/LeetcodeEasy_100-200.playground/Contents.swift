@@ -162,6 +162,31 @@ func singleNumber(_ nums: [Int]) -> Int {
 let nums = [1,5,6,5,6,3,1]
 //let singleNum = singleNumber(nums)
 
+/*
+141. Linked List Cycle
+Approach : Use a fast and slow iterator, where slow iterates by 1 (.next) and fast iterates by 2 (.next.next)
+Compare the pointers for equality to see if there is a cycle(itersections of slow and fast pointer)
+ 
+ Time : O(n)
+ Space : O(1)
+
+*/
+func hasCycle(_ head: ListNode?) -> Bool {
+    var slow = head
+    var fast = head?.next
+    
+    while slow != nil{
+        if slow === fast{
+            return true
+        }
+        
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    return false
+ }
+
+
 /* 167. Two Sum II - Input array is sorted
  Three solutions : Two pointers, nested for loops, hash
  */

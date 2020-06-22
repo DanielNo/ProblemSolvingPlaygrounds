@@ -37,7 +37,27 @@ func isPalindrome(_ x: Int) -> Bool {
     }
     return true
 }
+/*
+26. Remove Duplicates from Sorted Array
+Approach : Loop through the array while checking current and next indices.
+If a duplicate is found, remove the next index in the array.
+Loop under bounds of array count -1 so that it is zero indexed and accounts for next value.
 
+time : O(n), unless swift's remove function implementation is a costly operation
+Space : O(1)
+
+*/
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+    var i = 0
+    while(i < nums.count-1){
+        if nums[i] == nums[i+1]{
+            nums.remove(at: i+1)
+        }else{
+            i+=1
+        }
+    }
+    return nums.count
+}
 
 /* 27. Remove Element
  Example 1:
@@ -145,6 +165,33 @@ let ans2 = maxSubArray(input)
 let ans = maxSubArrayBrute(input)
 
 //let ans = maxSubArrayNaive(input3)
+
+/*
+58. Length of Last Word
+
+Approach : Due to edge cases of trailing whitespace and string length 1, enumerate a character array backwards.
+
+Time : O(n) reversing string takes linear time and iterating in reverse is also linear.
+Space : O(n) for character array
+*/
+
+ func lengthOfLastWord(_ s: String) -> Int {
+        let str = Array(s)
+        var count = 0
+        for (i,c) in str.reversed().enumerated(){
+            if c == " "{
+                if count > 0{
+                    return count
+                }else{
+                    continue
+                }
+            }else{
+                count += 1
+            }
+        }
+        return count
+    }
+
 
 /* 100. Same Tree
  Approach : Use recursion and compare values of nodes.

@@ -133,6 +133,85 @@ ans2?.desc()
 var treeAns : [Int] = Array()
 
 /*
+ 3. Longest Substring Without Repeating Characters
+
+ Approach : We are trying to find the longest substring without repeating characters.
+ Use the sliding window technique using two pointers to check for duplicates in the substring range.
+ 
+ Time : O(n) because of sliding window iteration through character array
+ Space: O(n) because of Array of characters needed to iterate characters.
+ */
+
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    var chars = Array(s)
+    let count = chars.count
+    if count == 1 || count == 0{
+        return count
+    }
+    var head = 0
+    var tail = 0
+    
+    var ans = 0
+    
+    var sub : Set<Character> = Set()
+    while (tail < count) {
+        // If the tail pointer is contained in the set, remove the head element from the set and inch the sliding window forward. For the edge case where the tail and tail-1 value are equal, the head will keep getting removed and the sliding window will shorten to a size of 1 element and restart from the duplicated value.
+        if sub.contains(chars[tail]){
+            sub.remove(chars[head])
+            head += 1
+        }else{
+            // If the tail pointer is not contained in the set, insert it to the set, increase the tail of the sliding window by 1 to continue finding the largest substring.
+            sub.insert(chars[tail])
+            tail += 1
+            let total = sub.count
+            if total > ans{
+                ans = total
+            }
+        }
+    }
+            
+    return ans
+}
+/*
+16. 3Sum Closest (medium) brute force
+Approach : Calculate sum of all possible sum combinations of 3 numbers into a set to avoid duplicates.
+Find the difference between the sum and target value by using absolute value of target - sum.
+Note : Try solving again in a more optimal approach. Solved using a brute-force like approach for practice. Revisit again.
+
+Time : O(n^3) due to 3 nested for loops.
+Space : O(n) due to storing sums in a set
+
+*/
+func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
+        var sums : Set<Int> = Set()
+        let count = nums.count
+        for i in 0..<count{
+            for j in i+1..<count{
+                for k in j+1..<count{
+                    let sum = nums[i] + nums[j] + nums[k]
+                  //print("\(nums[i]), \(nums[j]), \(nums[k]) , sum : \(sum)")
+                    sums.insert(sum)
+                }
+            }
+        }
+//      print(sums)
+        
+        var closest = Int.max
+        var ans = 0
+        for sum in sums{
+            let diff = target-sum
+            if abs(diff) < closest{
+                closest = abs(diff)
+                ans = sum
+            }
+        }
+        
+        
+        return ans
+    }
+
+
+/*
 94. Binary Tree Inorder Traversal
  Approach 1 : recursion
  Approach 2 :

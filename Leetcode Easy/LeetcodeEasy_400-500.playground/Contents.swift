@@ -35,6 +35,51 @@ func sumLeft(_ node: TreeNode?, _ isLeft : Bool) -> Int{
 }
 
 /*
+414. Third Maximum Number
+
+Approach : Keep track of first, second and third max numbers by initializing with Int minimum value. (should also be able to use null value or optional)
+Loop through values and make comparisons. Push values of max and second max to second and third max respectively. Be careful of order of operations while assigning the new overwriting value before pushing the values down. A few edge cases to consider : same number being second and third max which should return the first max. Ex : 3, 2, 2 should return 3
+
+Time : O(n) loop through array.
+Space : O(1) Constant space, only requires 3 variables and does not grow with increasing input
+
+
+*/
+
+
+func thirdMax(_ nums: [Int]) -> Int {
+    let count = nums.count
+    if count == 1{
+        return nums[0]
+    }
+    var max = Int.min
+    var secondMax = Int.min
+    var thirdMax = Int.min
+    
+    for (i,num) in nums.enumerated(){
+        if(num == max || num == secondMax || num == thirdMax){
+            continue
+        }else if num > max{
+            thirdMax = secondMax
+            secondMax = max
+            max = num
+        }else if num > secondMax{
+            thirdMax = secondMax
+            secondMax = num
+        }else if num > thirdMax{
+            thirdMax = num
+        }
+    }
+    
+    if thirdMax == Int.min{
+        return max
+    }else{
+        return thirdMax
+    }
+}
+
+
+/*
  448. Find All Numbers Disappeared in an Array
 
  Naive Approach : Loop through the array, check every number and see if it exists, if not add to answer array

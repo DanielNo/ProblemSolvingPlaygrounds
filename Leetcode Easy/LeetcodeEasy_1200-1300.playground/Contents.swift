@@ -144,6 +144,84 @@ func minTimeToVisitAllPoints(_ points: [[Int]]) -> Int {
     }
     return ans
 }
+/*
+1275. Find Winner on a Tic Tac Toe Game
+   
+    Approach : Generate a board first from the moves input array. Use a modulo operator to determine if the move is a X or O and write the player string(A or B) instead of X and O value
+Check for edge case of less than 5 moves, there will be no winner possible with less than 5 total moves.
+Create separate functions for validating all rows columns and diagonals in the grid.
+If there is a winner, return any value that was validated.
+If all validation functions fail, check for moves count less than 9 to determine if the game is pending or a draw.
+
+Time : Not sure, O(n) or O(n*m)
+Space : O(n*m), space used for the matrix.
+*/
+
+func tictactoe(_ moves: [[Int]]) -> String {
+    var board = generateBoard(moves)
+    let count = moves.count
+    if count < 5{
+        return "Pending"
+    }
+    
+    if let rowWinner = validateRows(board){
+        return rowWinner
+    }
+    if let columnWinner = validateColumns(board){
+        return columnWinner
+    }
+    if let diagWinner = validateDiagonals(board){
+        return diagWinner
+    }
+    
+    if count < 9{
+        return "Pending"
+    }else{
+        return "Draw"
+    }
+}
+
+func generateBoard(_ moves : [[Int]]) -> [[String]]{
+    var board : [[String]] = [["","",""],["","",""],["","",""]]
+    for (i,arr) in moves.enumerated(){
+        let move = i % 2 == 0 ? "A" : "B"
+        let y = arr[0]
+        let x = arr[1]
+        board[y][x] = move
+    }
+    return board
+}
+
+func validateRows(_ board : [[String]]) -> String?{
+    for (i,row) in board.enumerated(){
+        if (row[0] == row[1] && row[1] == row[2] && row[0].count > 0){
+            return row[0]
+        }
+        
+    }
+    return nil
+}
+
+func validateColumns(_ board : [[String]]) -> String?{
+    for i in 0...2{
+        if board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i].count > 0{
+            return board[0][i]
+        }
+    }
+    return nil
+}
+
+func validateDiagonals(_ board : [[String]]) -> String?{
+    if board[1][1].count > 0{
+        if board[0][0] == board[1][1] && board[1][1] == board[2][2]{
+            return board[0][0]
+        }else if(board[2][0] == board[1][1] && board[1][1] == board[0][2]){
+            return board[2][0]
+        }
+
+    }
+    return nil
+}
 
 
 /*
