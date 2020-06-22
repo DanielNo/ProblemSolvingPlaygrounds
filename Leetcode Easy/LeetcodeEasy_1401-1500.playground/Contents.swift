@@ -29,3 +29,22 @@ func maxProduct(_ nums: [Int]) -> Int {
     }
     return (first-1) * (second-1)
 }
+
+/*
+ 1480. Running Sum of 1d Array
+
+ Approach : Create a variable that will store the running sum. For each index, add number to sum and write to output array.
+ 
+ Time : O(n)
+ Space : O(n) for output array. Could be O(1) if mutating input array.
+ */
+func runningSum(_ nums: [Int]) -> [Int] {
+    let count = nums.count
+    var sum = 0
+    var ans = Array(repeating: 0, count : count)
+    for (i,n) in nums.enumerated(){
+        sum += n
+        ans[i] = sum
+    }
+    return ans
+}

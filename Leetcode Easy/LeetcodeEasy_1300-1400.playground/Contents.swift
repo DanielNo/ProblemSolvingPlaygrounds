@@ -59,6 +59,31 @@ func maximum69Number (_ num: Int) -> Int {
     }
 }
 
+/*
+ 1342. Number of Steps to Reduce a Number to Zero
+ Approach : Follow the directions and translate the requirements into code. Requirements being if even, divide number by 2, if odd subtract 1 from number.
+ For each iteration, increment a counter and return it.
+ 
+ Time : O(log n )
+ Space: O(1)
+
+ */
+func numberOfSteps (_ num: Int) -> Int {
+    var steps = 0
+    var n = num
+    while n != 0{
+        let even = n % 2 == 0 ? true : false
+        if (even){
+            n = n / 2
+        }else{
+            n -= 1
+        }
+        steps += 1
+    }
+    return steps
+}
+
+
 maximum69Number(6969)
 /*
  1351. Count Negative Numbers in a Sorted Matrix
