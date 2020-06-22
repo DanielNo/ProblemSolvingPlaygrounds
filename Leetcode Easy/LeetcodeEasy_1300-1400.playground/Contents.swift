@@ -147,8 +147,15 @@ func binarySearch(_ arr : [Int]) -> Int{
  Time : O(n)
  Space : O(n)
  
- Approach 3: Using the constraints, create an array with a range to store counts
+Apparently I solved this problem again...
  
+ Approach (after cheating): Create an array of 0 to max number as stated in problem limitations.
+ Store the counts of the numbers in arr[number]. Ex arr[1] stores occurrences of 1, arr[8] stores occurrences of 8
+ Loop through the counts array, keep track of a running sum and overwrite values in the counts array with the running sum.
+ Create an array sized to input array to overwrite values.
+ In the answer array, overwrite values by looking up the number in the running sum/occurences array.
+ Ex: [8,1,2,2,3]
+ Look up occurrences array of 8 to find running sum of 8
  */
 
 
@@ -178,6 +185,32 @@ func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
     }
     return ans
 }
+
+func smallerNumbersThanCurrent3(_ nums: [Int]) -> [Int] {
+        var arr = Array(repeating: 0, count : 101)
+        for (i,num) in nums.enumerated(){
+            arr[num] = arr[num] + 1
+        }
+        
+        var sum = 0
+        let count = nums.count
+        var ans = Array(repeating: 0, count: count)
+        
+        for (i,num) in arr.enumerated(){
+            if num != 0{
+            arr[i] = sum
+            sum += num
+            }
+            
+        }
+        
+        for (i,num) in nums.enumerated(){
+            ans[i] = arr[num]
+        }
+        
+        return ans
+    }
+
 smallerNumbersThanCurrent([8,1,2,2,3])
 //smallerNumbersThanCurrent([1,4,1,2,7,5,2])
 
