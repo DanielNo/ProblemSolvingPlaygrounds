@@ -28,7 +28,7 @@ func findRelativeRanksHash(_ nums: [Int]) -> [String] {
             dict[num] = "Silver Medal"
         case 2:
             dict[num] = "Bronze Medal"
-
+            
         default:
             dict[num] = String(index+1)
         }
@@ -45,7 +45,7 @@ let case3 = [2,1]
 findRelativeRanksHash(case2)
 
 /* 520. Detect Capital
-
+ 
  Approach : Think about the cases that validate the string. The input to be true, must be all capitals, first capital, or all lower cased.
  Time Complexity : O(n), returning a string as uppercased or lowercased should be linear operation and serves as upper bound of the function.
  Space Complexity : O(4n) = O(n)
@@ -109,9 +109,45 @@ func reverseK(str : String, k : Int) -> String{
 }
 
 reverseK(str: "hello", k: 2)
-/*
-599. Minimum Index Sum of Two Lists
 
+/*
+ 559. Maximum Depth of N-ary Tree
+ 
+ Approach : To find the levels of a tree, we have to keep track of the current level of the root. This is doable by passing as a parameter and incrementing by one and using recursion.
+ Note : Try solve again using technique used in solutions section. Apparently can use a queue.
+ Can also solve without a helper function
+ 
+ */
+
+class Solution {
+    var max = 0
+    func maxDepth(_ root: Node?) -> Int {
+        calcDepth(root,depth:1)
+        
+        return max
+    }
+    
+    func calcDepth(_ root: Node?, depth : Int) -> Void{
+        guard let r = root else{
+            return
+        }
+        
+        if r.children.count == 0{
+            max = max(depth,max)
+        }else{
+            for child in r.children{
+                calcDepth(child,depth:depth+1)
+            }
+            
+            
+        }
+        
+    }
+}
+
+/*
+ 599. Minimum Index Sum of Two Lists
+ 
  Approach : Iterate through first list and keep track of restaurant(string) values as key, with index as the value.
  
  Iterate through the second list to find keys that exist in list1 and 2.

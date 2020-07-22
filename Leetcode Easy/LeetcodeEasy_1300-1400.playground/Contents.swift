@@ -37,6 +37,30 @@ sumZero(3)
 sumZero(9)
 
 /*
+ 1313. Decompress Run-Length Encoded List
+ Approach : Simple way to solve problem. Iterate through array finding frequencies and values to append to return value array.
+ Couldn't find any more optimal approach on leetcode so this approach should be sufficient
+ 
+ Time : O(n)
+ Space : O(n)
+ 
+ */
+func decompressRLElist(_ nums: [Int]) -> [Int] {
+    var ans : [Int] = Array()
+    let count = nums.count
+    var i = 0
+    
+    while i < count{
+        let freq = nums[i]
+        let val = nums[i+1]
+        ans += Array(repeating:val,count:freq)
+        i+=2
+    }
+    
+    return ans
+}
+
+/*
  1323. Maximum 69 Number
 
  Approach 1: Convert number to character array, then int array. Find the first and leftmost 6
@@ -58,6 +82,29 @@ func maximum69Number (_ num: Int) -> Int {
         return num
     }
 }
+
+/*
+1137. N-th Tribonacci Number
+
+Approach : Use the same approach as a fibonacci sequence with memoization
+Note : Could use constant space using three variables and performing reassignment and may be a more optimal solution due to problems constraints
+
+Time : O(n)
+Space : O(n)
+
+*/
+    func tribonacci(_ n: Int) -> Int {
+        var dict = [0:0,1:1,2:1,3:2]
+        if n <= 3{
+            return dict[n] ?? 0
+        }else{
+            for i in 4...n{
+                dict[i] = dict[i-1]! + dict[i-2]! + dict[i-3]!
+            }
+        }
+        return dict[n] ?? 0
+    }
+
 
 /*
  1342. Number of Steps to Reduce a Number to Zero

@@ -77,6 +77,40 @@ func thirdMax(_ nums: [Int]) -> Int {
         return thirdMax
     }
 }
+/*
+448. Find All Numbers Disappeared in an Array (resolved)
+Approach(cheated): Mark an occurence of a number as negative. Because some numbers may appear twice, perform a check that the number is positive before marking as negative.
+We mark the values in the array by using their indexes. Ex: [3,2,1]. We iterate 3, mark arr[3] as -arr[3] but since 3 is out of bounds, we decrement this index by 1. So arr[3-1] = arr[3-1] * -1
+
+Note : Should try solving again because it took many attempts to submit an answer.
+
+Time : O(n)
+Space : O(1) because the output array is assumed to not take extra space.
+
+*/
+func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        
+    var arr = nums
+        var ans : [Int] = Array()
+        
+        for num in arr{
+            let i = num-1
+            let val = arr[i]
+            if val > 0{
+                arr[i] = arr[i] * -1
+            }
+        }
+        
+        for (i,val) in arr.enumerated(){
+            if val > 0{
+                ans.append(i+1)
+            }
+        }
+        
+        
+        return ans
+    }
+
 
 
 /*

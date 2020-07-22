@@ -3,6 +3,44 @@
 import UIKit
 
 /*
+107. Binary Tree Level Order Traversal II
+
+Approach (mine) : Count levels of tree and create empty 2d array. Recursively insert elements into the 2d array based on level.
+Approach (took a hint from answers and was able to solve):
+Insert elements into output array while traversing through tree in level order and reverse output.
+
+*/
+
+func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
+    var ans : [[Int]] = Array()
+    traverseBottom(root,level:1,arr : &ans)
+    return ans.reversed()
+}
+
+func traverseBottom(_ root: TreeNode?, level : Int, arr : inout [[Int]]) -> Void{
+    guard let r = root else{
+        return
+    }
+    let count = arr.count
+    if count < level{
+        arr.append([])
+    }
+    arr[level-1].append(r.val)
+    
+    
+    if r.left != nil && r.right != nil{
+        traverseBottom(r.left, level: level+1, arr : &arr)
+        traverseBottom(r.right, level: level+1, arr : &arr)
+    }
+    if r.left == nil && r.right != nil{
+        traverseBottom(r.right, level: level+1, arr : &arr)
+    }
+    if r.left != nil && r.right == nil{
+        traverseBottom(r.left, level: level+1, arr : &arr)
+    }
+}
+
+/*
  118. Pascal's Triangle
  https://leetcode.com/problems/pascals-triangle/description/
  
@@ -193,7 +231,8 @@ func hasCycle(_ head: ListNode?) -> Bool {
 
 func twoSumPointers(_ numbers: [Int], _ target: Int) -> [Int] {
     
-    
+    // try this again
+    return [0]
 }
 
 func twoSumNaive(_ numbers: [Int], _ target: Int) -> [Int] {

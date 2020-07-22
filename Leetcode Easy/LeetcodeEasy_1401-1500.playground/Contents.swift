@@ -1,4 +1,27 @@
 import UIKit
+
+/*
+1431. Kids With the Greatest Number of Candies
+Approach : Find the max value in array. Iterate through array and see if arr[I] + extraCandies >= max value
+
+Time: O(n)
+Space : O(n) for answer array, otherwise O(1)
+
+*/
+func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
+    var max = candies.max() ?? 0
+    var ans : [Bool] = Array()
+    
+    for (i,n) in candies.enumerated(){
+        if n == max || n + extraCandies >= max{
+            ans.append(true)
+        }else{
+            ans.append(false)
+        }
+    }
+    return ans
+}
+
 /*
 1460. Make Two Arrays Equal by Reversing Sub-arrays
 
@@ -121,4 +144,30 @@ func runningSum(_ nums: [Int]) -> [Int] {
         ans[i] = sum
     }
     return ans
+}
+
+/*
+1492. The kth Factor of n
+Approach : Build an array with all factors. Return the kth factor by accessing array by index. Ex : 1st index should be arr[0] which is index k-1
+Note : Consider edge cases carefully before executing code.
+Time : O(n)
+Space : O(n)
+
+*/
+
+func kthFactor(_ n: Int, _ k: Int) -> Int {
+    var factors : [Int] = Array()
+    if n > 1{
+        for i in 1...n/2{
+            if n % i == 0{
+                factors.append(i)
+            }
+        }
+    }
+    factors.append(n)
+    if factors.count < k{
+        return -1
+    }else{
+        return factors[k-1]
+    }
 }

@@ -37,16 +37,63 @@ func isPalindrome(_ x: Int) -> Bool {
     }
     return true
 }
+
 /*
-26. Remove Duplicates from Sorted Array
-Approach : Loop through the array while checking current and next indices.
-If a duplicate is found, remove the next index in the array.
-Loop under bounds of array count -1 so that it is zero indexed and accounts for next value.
+ 20. Valid Parentheses
+ 
+ Approach : Use a stack like data structure to push and pop characters. If an enclosing character is encountered (")" "}" ]") , compare last element on stack with current element. If an inverse or matching opening and closing character set is found, pop item from stack and do not append. Otherwise, push an opening character to stack.
+ Can also use a string or an array to mimic a stack data structure by using append and remove last.
+ 
+ Time : O(n)
+ Space : O(n)
+ 
+ */
 
-time : O(n), unless swift's remove function implementation is a costly operation
-Space : O(1)
+func isValid(_ s: String) -> Bool {
+    var stack = String()
+    
+    for c in s{
+        if let last = stack.last{
+            if isInverse(last, c2 : c){
+                stack.removeLast()
+            }else{
+                stack.append(c)
+            }
+        }else{
+            stack.append(c)
+        }
+        print(c)
+    }
+    
+    if stack.count == 0{
+        return true
+    }else{
+        return false
+    }
+}
 
-*/
+func isInverse(_ c1 : Character, c2 : Character)->Bool{
+    if c1 == "(" && c2 == ")"{
+        return true
+    }else if(c1 == "[" && c2 == "]"){
+        return true
+    }else if (c1 == "{" && c2 == "}"){
+        return true
+    }
+    return false
+}
+
+
+/*
+ 26. Remove Duplicates from Sorted Array
+ Approach : Loop through the array while checking current and next indices.
+ If a duplicate is found, remove the next index in the array.
+ Loop under bounds of array count -1 so that it is zero indexed and accounts for next value.
+ 
+ time : O(n), unless swift's remove function implementation is a costly operation
+ Space : O(1)
+ 
+ */
 func removeDuplicates(_ nums: inout [Int]) -> Int {
     var i = 0
     while(i < nums.count-1){
@@ -86,14 +133,14 @@ removeElement(&arrCase2, 2)
 //removeElement(&arrCase3, 3)
 
 /*
-53. Maximum Subarray
+ 53. Maximum Subarray
  Input: [-2,1,-3,4,-1,2,1,-5,4],
  Output: 6
  Explanation: [4,-1,2,1] has the largest sum = 6.
-
  
  
-*/
+ 
+ */
 
 /*
  O(n^2) brute force solution. Check all subarrays using nested loops.
@@ -121,13 +168,13 @@ func maxSubArrayNaive(_ nums: [Int]) -> Int {
 func maxSubArrayBrute(_ nums: [Int]) -> Int{
     let count = nums.count
     if(count == 1){
-     return nums.first!
+        return nums.first!
     }
     var greatest = 0
     for i in (0..<count).reversed(){
         for j in 0...i{
             let subArray = nums[j..<i]
-//            print(subArray)
+            //            print(subArray)
             let sum = subArray.reduce(0, +)
             if sum > greatest {
                 greatest = sum
@@ -144,8 +191,8 @@ func maxSubArray(_ nums: [Int]) -> Int {
     }
     var globalMax = nums[0]
     var localMax = nums[0]
-
-
+    
+    
     for (index,num) in nums.enumerated(){
         let subArray = nums[0...index]
         let sum = subArray.reduce(0, +)
@@ -167,30 +214,30 @@ let ans = maxSubArrayBrute(input)
 //let ans = maxSubArrayNaive(input3)
 
 /*
-58. Length of Last Word
+ 58. Length of Last Word
+ 
+ Approach : Due to edge cases of trailing whitespace and string length 1, enumerate a character array backwards.
+ 
+ Time : O(n) reversing string takes linear time and iterating in reverse is also linear.
+ Space : O(n) for character array
+ */
 
-Approach : Due to edge cases of trailing whitespace and string length 1, enumerate a character array backwards.
-
-Time : O(n) reversing string takes linear time and iterating in reverse is also linear.
-Space : O(n) for character array
-*/
-
- func lengthOfLastWord(_ s: String) -> Int {
-        let str = Array(s)
-        var count = 0
-        for (i,c) in str.reversed().enumerated(){
-            if c == " "{
-                if count > 0{
-                    return count
-                }else{
-                    continue
-                }
+func lengthOfLastWord(_ s: String) -> Int {
+    let str = Array(s)
+    var count = 0
+    for (i,c) in str.reversed().enumerated(){
+        if c == " "{
+            if count > 0{
+                return count
             }else{
-                count += 1
+                continue
             }
+        }else{
+            count += 1
         }
-        return count
     }
+    return count
+}
 
 
 /* 100. Same Tree

@@ -1,4 +1,59 @@
 import UIKit
+
+/*
+203. Remove Linked List Elements
+
+Approach : Trim the front values that equal to the target value to remove.
+After removing values at the front of the linked list that match the value, we know the head's value does not equal the target.
+From here we can assign the trimmed head as a current node iterator. With this current node iterator, we can check the next value for matches to the target.
+If the next value matches, we assign current's next value as its second next value. This will lose the reference to the matching next value, and will reassign next to the second next
+
+Ex: target = 2
+1-> 2 -> 3
+Becomes 1 -> 3
+
+Ex: Trim the front test case
+target = 2
+
+2-> 2-> 3 -> 2 -> 4
+Trim front step : head and curr points to : 3 -> 2 -> 4
+Trim remainder step:
+head points to initial node still
+curr points to 3 -> 4. Curr ultimately points to 4
+
+Time : O(n)
+Space : O(1)
+
+*/
+
+func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+    var h = head
+    var trimFront = false
+    
+    while trimFront == false{
+        if let v = h?.val, v == val{
+            h = h?.next
+        }else{
+            trimFront = true
+        }
+    }
+    
+    var cur = h
+    
+    while cur?.next != nil{
+        if let target = cur?.next?.val{
+            if target == val{
+                cur?.next = cur?.next?.next
+            }else{
+                cur = cur?.next
+            }
+        }
+    }
+    
+    return h
+}
+
+
 /* 204. Count Primes : https://leetcode.com/problems/count-primes/description/
  Count the number of prime numbers less than a non-negative number, n.
  Approach : Use sieve of eranthoses algorithm to mark off composite numbers in an array until the remaining numbers in array are prime.
@@ -59,6 +114,31 @@ func markBoolean( array : inout [Bool], num : Int) -> [Bool]{
     }
     return array
 }
+
+/*
+206. Reverse Linked List
+
+(Resolved after 2 years)
+Approach : Keep a temporary pointer to next, and use a head and tail pointer. Tail pointer is initialized to nil, which we copied from our previous approach.
+Update the two pointers inside the while loop and reassign the temporary next variable.
+
+*/
+
+
+func reverseList(_ head: ListNode?) -> ListNode? {
+    var h = head
+    var tail : ListNode? = nil
+    
+    while h != nil{
+        let next = h?.next
+        h?.next = tail
+        tail = h
+        h = next
+    }
+    
+    return tail
+}
+
 
 
 /* 268. Missing Number

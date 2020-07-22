@@ -3,10 +3,10 @@ import UIKit
 /*
  905. Sort Array By Parity
  Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by all the odd elements of A.
-
+ 
  You may return any answer array that satisfies this condition.
-
-Approach 1(trivial): Filter array for odd and even, and combine into new array. Not very efficient but very simple to implement.
+ 
+ Approach 1(trivial): Filter array for odd and even, and combine into new array. Not very efficient but very simple to implement.
  
  Approach 2: In place swap. Took a few submissions for edge cases using while loop. After cheating, learned the question is solvable with a for loop. TODO : attempt with a for loop
  
@@ -35,10 +35,59 @@ sortArrayByParity([3,1,2,4,6,9,4,2,1,0,7])
 //sortArrayByParity([1,3])
 
 /*
+ 922. Sort Array By Parity II
+ Approach : iterate through array and check current element if it is in right place(odd value at odd index, even value at even index).
+ If not at correct place, use second pointer to find next opposite value(even vs odd) and perform a swap.
+ Time : O(n^2)
+ Space : O(1)
+ Note : attempt again using stride by 2 approach
+ */
+func sortArrayByParityII(_ A: [Int]) -> [Int] {
+    var a = A
+    var j = 0
+    for i in 0..<a.count-1{
+        j = i+1
+        // even
+        if i % 2 == 0{
+            if a[i] % 2 == 0{
+                continue
+            }else{
+                while a[j] % 2 == 1{
+                    j+=1
+                }
+                let temp = a[i]
+                a[i] = a[j]
+                a[j] = temp
+            }
+            
+            
+            // odd
+        }else{
+            if a[i] % 2 == 0{
+                while a[j] % 2 == 0{
+                    j+=1
+                }
+                let temp = a[i]
+                a[i] = a[j]
+                a[j] = temp
+                
+                
+            }else{
+                continue
+            }
+            
+            
+        }
+    }
+    return a
+}
+
+
+/*
  961. N-Repeated Element in Size 2N Array
  In a array A of size 2N, there are N+1 unique elements, and exactly one of these elements is repeated N times.
  Return the element repeated N times.
-
+ 
  Example 1:
  Input: [1,2,3,3]
  Output: 3
@@ -46,7 +95,7 @@ sortArrayByParity([3,1,2,4,6,9,4,2,1,0,7])
  Approach : Use a set. Because there are N+1 unique elements, this means all are unique minus the element that is repeated. Use a set to find the duplicate. Ex : 2N array where n = 2, array count = 4 and unique elements = 3 where 1 of the three elements is repeated twice (n times)
  Time : O(n)
  Space : O(n)
-
+ 
  */
 func repeatedNTimes(_ A: [Int]) -> Int {
     var set : Set<Int> = Set()

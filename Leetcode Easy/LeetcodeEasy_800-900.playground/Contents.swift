@@ -3,7 +3,7 @@
 import UIKit
 
 /*
-811. Subdomain Visit Count
+ 811. Subdomain Visit Count
  
  Example 2:
  Input:
@@ -17,8 +17,8 @@ import UIKit
  
  Time Complexity : O(n)
  Space Complexity : O(n)
-
-*/
+ 
+ */
 
 let input1 = ["9001 discuss.leetcode.com"]
 let input2 = ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
@@ -50,30 +50,30 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
     }
     
     let components = fullDomain.components(separatedBy: ".")
-        var allDomains : [String] = []
-        allDomains.append(fullDomain)
-        if subdomainCount == 2 {
-            allDomains.append(components[1]+"."+components[2])
-            allDomains.append(components[2])
-
-        }
-        if subdomainCount == 1 {
-            allDomains.append(components[1])
-        }
+    var allDomains : [String] = []
+    allDomains.append(fullDomain)
+    if subdomainCount == 2 {
+        allDomains.append(components[1]+"."+components[2])
+        allDomains.append(components[2])
+        
+    }
+    if subdomainCount == 1 {
+        allDomains.append(components[1])
+    }
     
-        for aDomain in allDomains{
-            if domainVisits[aDomain] == 0 || domainVisits[aDomain] == nil {
-                domainVisits[aDomain] = domainCount
-            }else{
-                domainVisits[aDomain] = domainVisits[aDomain]! + domainCount
-            }
+    for aDomain in allDomains{
+        if domainVisits[aDomain] == 0 || domainVisits[aDomain] == nil {
+            domainVisits[aDomain] = domainCount
+        }else{
+            domainVisits[aDomain] = domainVisits[aDomain]! + domainCount
         }
+    }
     
 }
 subdomainVisits(input2)
 
 /* 830. Positions of Large Groups
-
+ 
  Time Complexity : O(n)
  Space Complexity : O(1)
  */
@@ -90,7 +90,7 @@ func largeGroupPositions(_ S: String) -> [[Int]] {
     for (index,char) in S.enumerated(){
         let c = String(char)
         if c == current{
-         currentCount += 1
+            currentCount += 1
         }else{
             if currentCount >= 3 {
                 ans.append([currentIndex,index-1])
@@ -105,7 +105,7 @@ func largeGroupPositions(_ S: String) -> [[Int]] {
                 ans.append([currentIndex,index])
             }
         }
-//        print("\(current) : \(currentCount)")
+        //        print("\(current) : \(currentCount)")
     }
     return ans
 }
@@ -120,8 +120,8 @@ largeGroupPositions(large1)
 
 /* 832. Flipping an Image
  Approach : Reverse each array, then run a for loop on each number and perform a bitwise XOR ^ to flip 0 into 1 and 1 into 0
-    1 ^ 1 = 0
-    0 ^ 1 = 1
+ 1 ^ 1 = 0
+ 0 ^ 1 = 1
  
  Time Complexity : O(n) Although we have nested for loops, execution will be O(n) because we are only iterating through all elements of the array.
  Space Complexity : O(1), using an extra array pointer here because function parameters in swift are immutable unless marked inout.
@@ -144,7 +144,7 @@ flipAndInvertImage(case1)
 
 /*
  867. Transpose Matrix
-
+ 
  Approach : A transpose is a matrix with it's columns placed as rows
  Iterate through the matrix, and write the values into a new matrix.
  
@@ -168,4 +168,29 @@ func transpose(_ A: [[Int]]) -> [[Int]] {
     }
     
     return ans
+}
+
+/*
+ 876. Middle of the Linked List
+ 
+ Approach (non optimal): iterate through the linked list to get the count of nodes. Iterate again until counter reaches half, do some math on whether the middle is even or not to return the correct node.
+ 
+ Approach (optimal) : Iterate through the linked list with two pointers. One slow and one fast. When fast is nil, we know that slow is at the middle of the linked list.
+ 
+ Note: I initially thought of this approach but remembered that linked list problems can be solved with two pointers.
+ Was able to code optimal approach in first compile and submission!
+ 
+ Time : O(n)
+ Space : The space required for two pointers on the linked list. Should be constant space or linear, not sure.
+ */
+
+func middleNode(_ head: ListNode?) -> ListNode? {
+    var slow = head
+    var fast = head?.next
+    
+    while (fast != nil){
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    return slow
 }

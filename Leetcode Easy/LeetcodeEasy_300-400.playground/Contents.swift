@@ -23,36 +23,75 @@ func reverseString(_ s: String) -> String {
 reverseString("hello")
 
 /*
-345. Reverse Vowels of a String
-Approach : Use two pointers to find the next vowel going forward and backwards. Swap when both pointers are pointing to a vowel.
-Time : O(n) looping through all characters
-Space : O(n) due to character array copy from original string.
-*/
+ 345. Reverse Vowels of a String
+ Approach : Use two pointers to find the next vowel going forward and backwards. Swap when both pointers are pointing to a vowel.
+ Time : O(n) looping through all characters
+ Space : O(n) due to character array copy from original string.
+ */
 
-    func reverseVowels(_ s: String) -> String {
-        let count = s.count
-        if count <= 1{
-            return s
-        }
-        var i = 0
-        var j = count-1
-        let vowels : Set<Character> = ["a","e","i","o","u","A","E","I","O","U"]
-        var str = Array(s)
-        while i < j {
-            if vowels.contains(str[i]) && vowels.contains(str[j]){
-                let temp = str[i]
-                str[i] = str[j]
-                str[j] = temp
-                i+=1
-                j-=1
-            }else if !vowels.contains(str[i]){
-                i+=1
-            }else if !vowels.contains(str[j]){
-                j-=1
-            }
-        }
-        return String(str)
+func reverseVowels(_ s: String) -> String {
+    let count = s.count
+    if count <= 1{
+        return s
     }
+    var i = 0
+    var j = count-1
+    let vowels : Set<Character> = ["a","e","i","o","u","A","E","I","O","U"]
+    var str = Array(s)
+    while i < j {
+        if vowels.contains(str[i]) && vowels.contains(str[j]){
+            let temp = str[i]
+            str[i] = str[j]
+            str[j] = temp
+            i+=1
+            j-=1
+        }else if !vowels.contains(str[i]){
+            i+=1
+        }else if !vowels.contains(str[j]){
+            j-=1
+        }
+    }
+    return String(str)
+}
+
+/*
+ 350. Intersection of Two Arrays II
+ 
+ Approach : Problem is worded misleadingly. Order does not matter in the intersection answer. Because of this, iterate through any array and store the counts in a dictionary. Iterate through the other array and decrement the dictionary containing the value's frequency by 1. If a match is found in the dictionary, an intersection has been found. Add intersections that are found to the answer array.
+ Note: Didn't understand problem until I read comments in solutions. Learned that the output did not have to be in order. The examples both showed output being in order which was misleading.
+ Was able to answer correctly in first submission, which is good.
+ 
+ Time : O(n)
+ Space : O(n)
+ 
+ */
+
+func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    var dict : [Int : Int] = Dictionary()
+    let c1 = nums1.count
+    let c2 = nums2.count
+    if c1 == 0 || c2 == 0{
+        return []
+    }
+    
+    for num in nums1{
+        if let val = dict[num]{
+            dict[num] = val + 1
+        }else{
+            dict[num] = 1
+        }
+    }
+    var ans : [Int] = Array()
+    for num in nums2{
+        if let val = dict[num], val > 0{
+            dict[num] = val - 1
+            ans.append(num)
+        }
+    }
+    
+    return ans
+}
+
 
 /*
  387. First Unique Character in a String
