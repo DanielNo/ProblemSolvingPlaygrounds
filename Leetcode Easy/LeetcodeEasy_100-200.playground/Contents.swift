@@ -41,6 +41,42 @@ func traverseBottom(_ root: TreeNode?, level : Int, arr : inout [[Int]]) -> Void
 }
 
 /*
+112. Path Sum
+Approach : Level order traversal(BFS) using parameters to pass data to recursive calls.
+Keep track of the current sum in the path by using the currentSum parameter. When a node has no more children, the path is complete and we check for sum equality.
+
+Time : O(n), each node will be visited once.
+Space : O(n) if the tree is completely unbalanced
+O(log n) if the tree is completely balanced.
+
+Note: Did not know the correct time and space complexity, review binary tree/recursive time complexity again in future.
+
+*/
+
+func hasPathSum(_ root: TreeNode?, _ sum: Int) -> Bool {
+        if root == nil{
+            return false
+        }
+        return checkSum(root,sum,0)
+    }
+    
+    func checkSum(_ root: TreeNode?, _ sum: Int,_ currentSum: Int) -> Bool{
+        guard let r = root else{
+            return currentSum == sum
+        }
+        let newSum = currentSum + r.val
+        if r.left == nil && r.right == nil{
+            return newSum == sum
+        }else if(r.left == nil && r.right != nil){
+            return checkSum(r.right,sum,newSum)
+        }else if(r.left != nil && r.right == nil){
+            return checkSum(r.left,sum,newSum)
+        }else{
+            return checkSum(r.left,sum,newSum) || checkSum(r.right,sum,newSum)
+        }
+    }
+
+/*
  118. Pascal's Triangle
  https://leetcode.com/problems/pascals-triangle/description/
  

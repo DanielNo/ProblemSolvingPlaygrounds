@@ -72,6 +72,50 @@ func findSubDomains(domain : String, domainVisits : inout [String : Int]){
 }
 subdomainVisits(input2)
 
+/*
+819. Most Common Word
+
+Approach : Create a frequency dictionary and a banned word set. Lowercase and strip all non letter and space characters in the string to create a word array that we can process.
+Use a set to improve performance while checking if word is in banned word list.
+Create two greatest variables, one for greatest occurrences and one for the most frequent word. Do this to avoid another linear scan of the frequency dictionary.
+
+*/
+
+func mostCommonWord(_ paragraph: String, _ banned: [String]) -> String {
+        let words = paragraph.split{ !$0.isLetter }.map{
+            return $0.lowercased()
+        }
+        
+        var bannedSet = Set(banned)
+        var freqDict : [String : Int] = Dictionary()
+        var greatest = 0
+        var ans = ""
+        
+        for word in words{
+            if bannedSet.contains(word){
+                continue
+            }else{
+                if let val = freqDict[word]{
+                    let newVal = val+1
+                    freqDict[word] = newVal
+                    if newVal > greatest{
+                        greatest = newVal
+                        ans = word
+                    }
+                }else{
+                    freqDict[word] = 1
+                    if greatest == 0{
+                        greatest = 1
+                        ans = word
+                    }
+                }
+            }
+        }
+        
+        return ans
+    }
+
+
 /* 830. Positions of Large Groups
  
  Time Complexity : O(n)
@@ -84,7 +128,7 @@ func largeGroupPositions(_ S: String) -> [[Int]] {
     if count < 3{
         return ans
     }
-    var current = String(S.characters.first!)
+    var current = String(S.first!)
     var currentCount = 0
     var currentIndex = 0
     for (index,char) in S.enumerated(){

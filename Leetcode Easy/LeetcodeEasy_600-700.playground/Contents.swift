@@ -19,6 +19,7 @@ public class TreeNode {
     }
 }
 
+
 func mergeTrees(_ t1: TreeNode?, _ t2: TreeNode?) -> TreeNode? {
     
     if t1 == nil && t2 != nil{
@@ -50,6 +51,45 @@ var tree2 = TreeNode(1)
 tree2.left = TreeNode(2)
 tree2.right = TreeNode(2)
 mergeTrees(tree1, tree2)
+
+/*
+637. Average of Levels in Binary Tree (resolved with queue approach)
+
+Approach : Use an array to simulate a queue. removeFirst and append methods can be used to mimic behavior of a queue while using an available array collection type.
+Use Breadth First Search aka level order traversal (queue approach). Start with a queue containing a root node. First step is to removeFirst(queue dequeue) which returns root. Enqueue its children after finding the average of this level.
+Basically empty out the queue every time for each level, replace values with the next level and continue iterating until nothing is left in the queue (no children remain)
+
+*/
+
+
+func averageOfLevels(_ root: TreeNode?) -> [Double] {
+    if root == nil{
+        return [0.0]
+    }
+    var queue : [TreeNode] = [root!]
+    var ans : [Double] = Array()
+    while (queue.count > 0){
+        let count = queue.count
+        var total = 0.0
+        var nodes = 0
+        for i in 0..<count{
+            let node = queue.removeFirst()
+            total += Double(node.val)
+            nodes+=1
+            
+            if let l = node.left{
+                queue.append(l)
+            }
+            if let r = node.right{
+                queue.append(r)
+            }
+        }
+        ans.append(total/Double(nodes))
+    }
+    
+    return ans
+}
+
 
 /* 682. Baseball Game
 
@@ -106,4 +146,31 @@ func calPoints(_ ops: [String]) -> Int {
     }
     
     return total
+}
+
+/*
+700. Search in a Binary Search Tree
+
+Approach : Check value if greater, less than or equal to target. Recursively search down the leaves based on the value comparison.
+
+Note : Slowly code up the problem using recursion. Was able to solve in a few compilation attempts without much trouble
+
+Time : O(log n)
+Space : O(h) stack space which is height of tree
+
+*/
+
+
+func searchBST(_ root: TreeNode?, _ val: Int) -> TreeNode? {
+    guard let r = root else{
+        return nil
+    }
+    if r.val == val{
+        return root
+    }else if r.val > val{
+        return searchBST(r.left,val)
+    }else if r.val < val{
+        return searchBST(r.right,val)
+    }
+    return nil
 }

@@ -49,3 +49,65 @@ class Solution {
         }
     }
 }
+
+
+/*
+977. Squares of a Sorted Array
+
+Approach : Find the first positive and negative numbers. To accomplish this, find the first positive number, then subtract the index by 1 to find the first negative number.
+Because "two pointers" is suggested as solution. We grab our first negative and positive value's index from the array.
+We iterate the negative pointer in reverse, and the positive pointer forward.
+Compare absolute values and append squared values to output array. Traverse the remaining pointer and append those squared values.
+
+Note : Was able to reach the concept without looking at coded solution but struggled with off by 1 index and index out of bounds errors while coding.
+Also did not code up edge case without looking at solution.
+Should solve again without errors next time.
+
+Time : O(n)
+Space : O(1)
+
+*/
+    
+func sortedSquares(_ A: [Int]) -> [Int] {
+        let count = A.count
+        if count == 1{
+            return [A[0]*A[0]]
+        }else if count == 0{
+            return []
+        }
+        var i = 0
+        var j = 0
+        var ans : [Int] = Array()
+        while A[i] < 0{
+            i+=1
+        }
+        j = i-1
+        
+        while j >= 0 && i < count{
+           print("i : \(i), j : \(j)")
+            if abs(A[j]) > abs(A[i]){
+                ans.append(A[i]*A[i])
+                i+=1
+            }else if(abs(A[j]) < abs(A[i])){
+                ans.append(A[j]*A[j])
+                j-=1
+            }else{
+                ans.append(A[j]*A[j])
+                ans.append(A[i]*A[i])
+                j-=1
+                i+=1
+            }
+        }
+        
+        while j >= 0{
+            ans.append(A[j]*A[j])
+            j-=1
+        }
+        while i < count{
+            ans.append(A[i]*A[i])
+            i+=1
+        }
+
+
+        return ans
+    }
