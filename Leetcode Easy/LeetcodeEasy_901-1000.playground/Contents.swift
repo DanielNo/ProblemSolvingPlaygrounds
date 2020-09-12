@@ -82,6 +82,67 @@ func sortArrayByParityII(_ A: [Int]) -> [Int] {
     return a
 }
 
+/*
+953. Verifying an Alien Dictionary
+Approach : Make a dictionary that contains the order for each character.
+Iterate each character of two adjacent words. Check the order indices of adjacent word's characters.
+There are edge cases to consider carefully such as shorter length string, matching letters followed by a sorted/unsorted comparison.
+
+Time:
+Space: O(1), a constant space of 26 characters in a map.
+
+*/
+func isAlienSorted(_ words: [String], _ order: String) -> Bool {
+        var orderDict : [Character : Int] = Dictionary()
+        
+        for (i,c) in order.enumerated(){
+            orderDict[c] = i
+        }
+        print(orderDict)
+
+
+        for i in 0..<words.count-1{
+            if isSorted(words[i],words[i+1],orderDict){
+                continue
+            }else{
+                return false
+            }
+            
+        }
+        return true
+    }
+    
+    func isSorted(_ s1 : String,_ s2 : String,_ orderDict : [Character : Int]) -> Bool{
+        let c1 = s1.count
+        let c2 = s2.count
+        let shorterString = c1 < c2 ? s1 : s2
+        let longerString = c1 < c2 ? s2 : s1
+        let chars1 = Array(s1)
+        let chars2 = Array(s2)
+        var i = 0
+        while i < shorterString.count{
+            if let l1 = orderDict[chars1[i]], let l2 = orderDict[chars2[i]]{
+                if l1 < l2{
+                    return true
+                }else if (l1 == l2){
+                    i+=1
+                    continue
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        }
+        if c1 < c2{
+            return true
+        }else{
+            return false
+        }
+        
+    }
+
+
 
 /*
  961. N-Repeated Element in Size 2N Array

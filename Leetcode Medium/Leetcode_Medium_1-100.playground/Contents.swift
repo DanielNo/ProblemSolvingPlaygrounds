@@ -210,6 +210,74 @@ func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
         return ans
     }
 
+/*
+17. Letter Combinations of a Phone Number
+
+Approach : Create a 2d array map that contains the character set for each phone number. Make a function that retrieves the character set for an INT. Create a recursive function that solves the problem when visualizing the problem as a tree that branches off into a new leaf for each character combination. When the final recursive call or tail of the phone number is reached, add the answer to the answer.
+
+Time: O(3^n x 4^m) where n is the number of digits in the input that maps to 3 letters. M is the number of digits in the input that maps to 4 letters.  n+m is the total number of digits in the input.
+Space: O(3^n x 4^m) since one has to keep 3^n x 4^m solutions.
+
+
+Note : Was able to solve the problem eventually on my own without cheating. It did take some time to think through and code up a solution but I broke it up and was successful.
+Don’t really understand the time and space complexity for this problem, copied it from the solutions.
+
+*/
+
+    var map : [[Character]] =
+    [
+        ["a","b","c"],
+        ["d","e","f"],
+        ["g","h","i"],
+        ["j","k","l"],
+        ["m","n","o"],
+        ["p","q","r","s"],
+        ["t","u","v"],
+        ["w","x","y","z"]
+    ]
+    
+    var answer : [String] = []
+    
+        // Sets up helper recursive function that does all the work
+    func letterCombinations(_ digits: String) -> [String] {
+        answer = []
+        if digits.count == 0{
+            return answer
+        }
+        var chars = Array(digits)
+        traverse(chars,0,"")
+        return answer
+    }
+    
+        
+    func traverse(_ digits : [Character],_ i : Int,_ str : String)->Void{
+        // When we reach the last digit, add the current string to the answer array. By this point the "str" parameter will be a unique and complete combination of characters.
+        if i == digits.count{
+            answer.append(str)
+            return
+        }else{
+            let charSet = characterSetForDigit(digits[i])
+            
+                        // Loop through all possible characters for a number. For each character, call the function recursively.
+                        // Visualize the problem as a tree that branches off into seperate recursive calls for each digit.
+            for char in charSet{
+                let newStr = str + String(char)
+                traverse(digits,i+1,newStr)
+            }
+        }
+        
+    }
+    
+        // Retreives character set for a phone number digit from the predefined 2d array.
+        // Use a 2d array that uses the (phone number - 2) as an index.
+        // Values are character arrays that match a digit of a phone number
+    func characterSetForDigit(_ digit : Character) -> [Character]{
+        guard let num = Int(String(digit)), num > 1 && num < 10 else{
+            return []
+        }
+        return map[num-2]
+    }
+
 
 /*
 94. Binary Tree Inorder Traversal
