@@ -34,7 +34,36 @@ func uniqueOccurrences(_ arr: [Int]) -> Bool {
     }
     return true
 }
+/*
+1213. Intersection of Three Sorted Arrays
 
+Approach : Create a set for intersection of arr1 and arr2. Create a set for the intersection of arr 3 and the union of arr1 & arr2 to find the intersection of all arrays.
+When the union set and the final array contain a match, add the value to the output array.
+
+Note : Can be solved more optimally using three pointers. Try solving again using that approach
+
+
+Time: O(n log n) worst case scenario we have to sort an array that contains a union of every single element in the input arrays.
+Space: O(n)
+
+*/
+func arraysIntersection(_ arr1: [Int], _ arr2: [Int], _ arr3: [Int]) -> [Int] {
+        var union : Set<Int> = Set(arr1)
+        var union2 : Set<Int> = Set()
+        var ans : [Int] = []
+        for (i,num) in arr2.enumerated(){
+            if union.contains(num){
+                union2.insert(num)
+            }
+        }
+        for (i,num) in arr3.enumerated(){
+            if union2.contains(num){
+                ans.append(num)
+            }
+        }
+        return ans.sorted()
+    
+}
 
 /*
 1221. Split a String in Balanced Strings

@@ -285,6 +285,31 @@ func twoSumNaive(_ numbers: [Int], _ target: Int) -> [Int] {
     return ans
 }
 
+/*
+189. Rotate Array
+
+Approach : Reduce number of "rotations" by using modulo operator. No point in repeatedly doing the same rotations, so we will use modulo operator to find the minimal amount of non repeated rotation operations.
+That leaves us with a reduced K amount of elements that we need to remove from the array, and append it to the head.
+Remove elements from tail of input array, append it to a new array of size K, combine input array and tail of k elements.
+
+
+Time: O(k), O(1) amortized insertion into our head array of size K
+Space: O(k), we initialize and insert into an array of size K. where K is the number of elements "rotated"
+
+*/
+
+
+  func rotate(_ nums: inout [Int], _ k: Int) {
+        let count = nums.count
+        let rotations = k > count ? k % count : k
+        var head : [Int] = []
+        for i in 0..<rotations{
+            let tail = nums.removeLast()
+            head.insert(tail,at:0)
+        }
+        
+        nums = head+nums
+    }
 
 /* 198. House Robber : https://leetcode.com/problems/house-robber/description/
 

@@ -149,7 +149,7 @@ func findDisappearedNumbersNaive(_ nums: [Int]) -> [Int] {
  
  */
 
-func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+func findDisappearedNumbers2(_ nums: [Int]) -> [Int] {
     var ans = [Int]()
     let count = nums.count
     var numsArr = nums
@@ -165,6 +165,39 @@ func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
     return ans
 }
 findDisappearedNumbers(input1)
+
+/*
+451. Sort Characters By Frequency
+
+Approach(not optimal but very simple to implement): Create a character frequency dictionary. Sort the array of keys by frequency.
+Look up the character frequency and append the character to an output character array as many times as it is recorded in the frequency dictionary.
+
+Time : O(n log n) due to sorting
+Space : O(n)
+
+Try solving with a heap or with another optimized approach
+
+*/
+    func frequencySort(_ s: String) -> String {
+        var dict : [Character : Int] = [:]
+        
+        for (i,char) in s.enumerated(){
+            dict[char] = dict[char, default: 0] + 1
+        }
+        
+        let values = dict.keys.sorted{
+            return dict[$0]! > dict[$1]!
+        }
+        
+        var ans : [Character] = []
+        for char in values{
+            for i in 0..<dict[char]!{
+                ans.append(char)
+            }
+        }
+        return String(ans)
+    }
+}
 
 /* 476. Number Complement
  Approach : Convert the int to binary. Flip the binary number using XOR 1 and return it.

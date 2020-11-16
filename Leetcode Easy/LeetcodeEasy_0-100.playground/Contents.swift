@@ -39,6 +39,59 @@ func isPalindrome(_ x: Int) -> Bool {
 }
 
 /*
+14. Longest Common Prefix
+
+Approach : We want to check each individual letter of each string for a match.
+To outer for loop bounds will be the shortest string's length, because a prefix match will be at most, the length of the shortest string.
+The inner for loop is iteration of each word in the input array.
+For each letter index of the outer for loop, we will iterate every word.
+
+
+Time: O(S) where S is the sum of all characters in the string. This is the worst case and should be used as the time complexity
+Space: O(n) for a character array copy of the input array.
+
+
+Note : Had some difficulty coding up the solution because I had never coded up a similiar problem, also did not correctly code it up a few times. But the approach to solving the problem was trivial.
+Time complexity thoughts were wrong as I stated the exact time under the optimal case. Going forward, make sure to estimate time complexity on the worst case.
+
+
+*/
+
+
+ func longestCommonPrefix(_ strs: [String]) -> String {
+        var pref = ""
+        var count = Int.max
+        
+        if strs.count == 1{
+            return strs[0]
+        }else if(strs.count == 0){
+            return pref
+        }
+        
+        var chars : [[Character]] = strs.map{
+            count = min(count,$0.count)
+            return Array($0)
+        }
+        
+// Count is the shortest length String
+// Get the i'th letter of the first word to use as a comparison
+// Check each word excluding the first word for a match
+        for i in 0..<count{
+            let letter = chars[0][i]
+            for j in 1..<chars.count{
+                if chars[j][i] == letter{
+                    continue
+                }else{
+                    return pref
+                }
+            }
+            pref+=String(letter)
+        }
+        
+        return pref
+    }
+
+/*
  20. Valid Parentheses
  
  Approach : Use a stack like data structure to push and pop characters. If an enclosing character is encountered (")" "}" ]") , compare last element on stack with current element. If an inverse or matching opening and closing character set is found, pop item from stack and do not append. Otherwise, push an opening character to stack.
@@ -204,7 +257,25 @@ func maxSubArray(_ nums: [Int]) -> Int {
     return globalMax
 }
 
+/*
+53. Maximum Subarray
+Approach : Looked at a very simple to read version of Kadane's algorithm which optimally solves the problem.
+Basically it means, keep track of the current maximum subarray, if the subarray goes negative, we start over from 0. This is calculated by max(currMax,0), add the current number to get the new currentMax. To update the totalMax, we get the greater value of currMax or totalMax.
+Note: Memorize this easy implementation and edit it to fit other problems. Try solve again.
 
+Time: O(n)
+Space: O(1)
+
+*/
+func maxSubArrayOptimal(_ nums: [Int]) -> Int {
+        var totalMax = Int.min
+        var currMax = Int.min
+        for (i,num) in nums.enumerated(){
+            currMax = max(currMax,0) + num
+            totalMax = max(totalMax, currMax)
+        }
+        return totalMax
+    }
 
 
 let ans2 = maxSubArray(input)
