@@ -260,6 +260,60 @@ func hasCycle(_ head: ListNode?) -> Bool {
     return false
  }
 
+/*
+155. Min Stack
+
+Approach : Every operation must be O(1) time.
+Our Pop operation is O(1) amortized, worst case O(n)
+
+Note : Struggled on edge case that involved 1 item left in stack being popped and resetting minimum to Int.max
+
+*/
+class MinStack {
+    var stack : [Int]
+    var minimum : Int
+    /** initialize your data structure here. */
+    init() {
+        stack = []
+        minimum = Int.max
+    }
+     
+    func push(_ x: Int) {
+        if x < minimum{
+            minimum = x
+        }
+        stack.append(x)
+    }
+     
+// If top is minimum, we could have 1 item left. Regardless we must update the minimum. If no items left, reset minimum to Int.max
+    func pop() {
+        if stack.count > 0{
+            if top() == minimum{
+                stack.removeLast()
+                if let newMin = stack.min(){
+                    minimum = newMin
+                }else{
+                    minimum = Int.max
+                }
+            }else{
+                stack.removeLast()
+            }
+        }
+    }
+     
+    func top() -> Int {
+        if let last = stack.last{
+            return last
+        }else{
+            return 0
+        }
+    }
+     
+    func getMin() -> Int {
+        return minimum
+    }
+}
+
 
 /* 167. Two Sum II - Input array is sorted
  Three solutions : Two pointers, nested for loops, hash
@@ -284,6 +338,40 @@ func twoSumNaive(_ numbers: [Int], _ target: Int) -> [Int] {
     }
     return ans
 }
+
+/*
+167. Two Sum II - Input array is sorted (solve again using two pointers)
+
+Approach: Create two pointers at the beginning and end of the array. Check if num[head] + num[tail] is equal, less than, or greater than target.
+If equal, return the values
+If less than, increment the head pointer by 1
+If greater than, decrement the tail pointer by 1
+There will be an answer so doing this approach with two pointers will eventually give an answer.
+
+Time : O(n)
+Space : O(1)
+
+Note : had to cheat to look at concept of two points to solve the problem, but was able to code it without much trouble
+Note : Solved it again after not looking for a while and got it down pretty good and coded up more efficiently.
+
+*/
+
+func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+        var i = 0
+        var j = numbers.count - 1
+         
+        while i < j{
+            let sum = numbers[i] + numbers[j]
+            if sum == target{
+                return [i+1,j+1]
+            }else if(sum < target){
+                i+=1
+            }else{
+                j-=1
+            }
+        }
+        return []
+    }
 
 /*
 189. Rotate Array

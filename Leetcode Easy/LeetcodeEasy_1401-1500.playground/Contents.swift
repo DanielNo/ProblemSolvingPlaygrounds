@@ -23,6 +23,29 @@ func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
 }
 
 /*
+1450. Number of Students Doing Homework at a Given Time
+Approach : Problem is very simple. Compare two numbers in both arrays in a for loop. Keep a counter of conditions that match.
+
+Time : O(n)
+Space : O(1)
+*/
+
+func busyStudent(_ startTime: [Int], _ endTime: [Int], _ queryTime: Int) -> Int {
+    let count = startTime.count
+    var busy = 0
+    for i in 0..<count{
+        let start = startTime[i]
+        let end = endTime[i]
+        if queryTime >= start && queryTime <= end{
+            busy+=1
+        }
+         
+    }
+    return busy
+}
+
+
+/*
 1460. Make Two Arrays Equal by Reversing Sub-arrays
 
  Approach (cheated): Problem is easier than initially thought. After looking at answers, being able to reverse any subarray an infinite number of times, allows us to manipulate the array into any order. Because of the ability to reverse subarrays infinitely, we just need to compare character(integers) counts of the arrays and check for equality.
@@ -171,3 +194,41 @@ func kthFactor(_ n: Int, _ k: Int) -> Int {
         return factors[k-1]
     }
 }
+
+/*
+1496. Path Crossing
+Approach : Keep track of the x and y coordinate values. For each direction, increment or decrement the x or y variable. For each coordinate created from mutating the x and y values, store the coordinate as a string in a set. If there is a duplicate entry trying to be inserted into the set, we have a path cross.
+
+Time: O(n) for loop on every character in the string
+Space: O(n) for number of characters in string. For each character, a string would be stored in the set in the worst case.
+
+*/
+
+
+func isPathCrossing(_ path: String) -> Bool {
+        var set : Set<String> = Set()
+        set.insert("00")
+        var x = 0
+        var y = 0
+        for (i,char) in path.enumerated(){
+            switch(char){
+            case "N":
+                y+=1
+            case "S":
+                y-=1
+            case "E":
+                x+=1
+            case "W":
+                x-=1
+            default:
+                print("none")
+            }
+            let coord = "\(x)\(y)"
+            if set.contains(coord){
+                return true
+            }else{
+                set.insert(coord)
+            }
+        }
+        return false
+    }

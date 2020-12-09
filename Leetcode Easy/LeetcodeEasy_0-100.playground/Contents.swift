@@ -310,6 +310,35 @@ func lengthOfLastWord(_ s: String) -> Int {
     return count
 }
 
+/*
+66. Plus One
+
+Approach: Problem looks deceptively easy, but if you think for a moment you will realize that carrying places will be the problem to solve.
+Create a for loop that will increment by one, starting at the end of the array.
+Increment the number by 1. If the sum is less than 10, return the array.
+If the sum is not less than 10, we set the current digit to 0 so that the next iteration of the loop will increment the next tens' place by 1.
+
+Note : Cheated but was able to code up the solution shown in discussion.
+Very good logic that is transformed into simple and concise code.
+
+Time : O(n) worst case of [9,9,9,9,....,9]
+Space : O(1) if not considering mutable array. Ideally the input array should be mutable to not use extra space.
+
+*/
+func plusOne(_ digits: [Int]) -> [Int] {
+        let count = digits.count-1
+        var ans = digits
+         
+        for i in (0...count).reversed(){
+            ans[i] = ans[i] + 1
+            if ans[i] < 10{
+                return ans
+            }
+            ans[i] = 0
+        }
+         
+        return [1]+ans
+    }
 
 /* 100. Same Tree
  Approach : Use recursion and compare values of nodes.

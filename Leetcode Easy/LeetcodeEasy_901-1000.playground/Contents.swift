@@ -83,6 +83,49 @@ func sortArrayByParityII(_ A: [Int]) -> [Int] {
 }
 
 /*
+929. Unique Email Addresses
+Approach : The dot characters means it should be stripped
+The + character means it should only consider characters before the + character and the suffix of @domain.com
+First step is to separate the email into user and domain name components by splitting by "@" character. Keep a reference to the domain for later.
+Strip the + character from the user name, then strip the "." characters from that.
+Append the stripped user name and the domain name to find the correct email address to forward to.
+
+Note: I solved the problem in a simple to code manner without trying to optimize. Should be room to optimize based on the performance and memory shown after submitting.
+TIme : O(n m) where n is the number of input emails. M is the length of characters in the input emails
+Space : O(n) for set of unique emails.
+
+*/
+func numUniqueEmails(_ emails: [String]) -> Int {
+        var uniqueEmails : Set<String> = Set()
+         
+        for (i,email) in emails.enumerated(){
+            var comps = email.components(separatedBy:"@")
+             
+            guard var user = comps.first else{
+                continue
+            }
+            user = stripPlusSign(user).replacingOccurrences(of:".", with: "")
+            guard var domain = comps.last else{
+                continue
+            }
+             
+            uniqueEmails.insert("\(user)@\(domain)")
+             
+        }
+         
+        return uniqueEmails.count
+    }
+     
+     
+    func stripPlusSign(_ str : String)->String{
+        if str.contains("+"){
+            let comps = str.components(separatedBy:"+")
+            return comps.first!
+        }
+        return str
+    }
+
+/*
 953. Verifying an Alien Dictionary
 Approach : Make a dictionary that contains the order for each character.
 Iterate each character of two adjacent words. Check the order indices of adjacent word's characters.

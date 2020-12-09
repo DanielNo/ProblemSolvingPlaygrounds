@@ -1,30 +1,30 @@
 import UIKit
 
 /*
-203. Remove Linked List Elements
-
-Approach : Trim the front values that equal to the target value to remove.
-After removing values at the front of the linked list that match the value, we know the head's value does not equal the target.
-From here we can assign the trimmed head as a current node iterator. With this current node iterator, we can check the next value for matches to the target.
-If the next value matches, we assign current's next value as its second next value. This will lose the reference to the matching next value, and will reassign next to the second next
-
-Ex: target = 2
-1-> 2 -> 3
-Becomes 1 -> 3
-
-Ex: Trim the front test case
-target = 2
-
-2-> 2-> 3 -> 2 -> 4
-Trim front step : head and curr points to : 3 -> 2 -> 4
-Trim remainder step:
-head points to initial node still
-curr points to 3 -> 4. Curr ultimately points to 4
-
-Time : O(n)
-Space : O(1)
-
-*/
+ 203. Remove Linked List Elements
+ 
+ Approach : Trim the front values that equal to the target value to remove.
+ After removing values at the front of the linked list that match the value, we know the head's value does not equal the target.
+ From here we can assign the trimmed head as a current node iterator. With this current node iterator, we can check the next value for matches to the target.
+ If the next value matches, we assign current's next value as its second next value. This will lose the reference to the matching next value, and will reassign next to the second next
+ 
+ Ex: target = 2
+ 1-> 2 -> 3
+ Becomes 1 -> 3
+ 
+ Ex: Trim the front test case
+ target = 2
+ 
+ 2-> 2-> 3 -> 2 -> 4
+ Trim front step : head and curr points to : 3 -> 2 -> 4
+ Trim remainder step:
+ head points to initial node still
+ curr points to 3 -> 4. Curr ultimately points to 4
+ 
+ Time : O(n)
+ Space : O(1)
+ 
+ */
 
 func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
     var h = head
@@ -116,13 +116,13 @@ func markBoolean( array : inout [Bool], num : Int) -> [Bool]{
 }
 
 /*
-206. Reverse Linked List
-
-(Resolved after 2 years)
-Approach : Keep a temporary pointer to next, and use a head and tail pointer. Tail pointer is initialized to nil, which we copied from our previous approach.
-Update the two pointers inside the while loop and reassign the temporary next variable.
-
-*/
+ 206. Reverse Linked List
+ 
+ (Resolved after 2 years)
+ Approach : Keep a temporary pointer to next, and use a head and tail pointer. Tail pointer is initialized to nil, which we copied from our previous approach.
+ Update the two pointers inside the while loop and reassign the temporary next variable.
+ 
+ */
 
 
 func reverseList(_ head: ListNode?) -> ListNode? {
@@ -139,7 +139,40 @@ func reverseList(_ head: ListNode?) -> ListNode? {
     return tail
 }
 
+/*
+ 257. Binary Tree Paths
+ Approach : Recursively traverse through binary tree using a helper method. Pass in the current path at each node. When reaching a node without any leaves, append to answer.
+ 
+ Note: Can solve iteratively using a stack
+ 
+ Time: O(n)
+ Space: not sure, but will require stack space for recursion
+ 
+ */
+func binaryTreePaths(_ root: TreeNode?) -> [String] {
+    var paths : [String] = []
+    guard let r = root else{
+        return paths
+    }
+    traverse(r,"\(r.val)", &paths)
+    return paths
+}
 
+func traverse(_ node: TreeNode?,_ curr : String,_ paths : inout [String]){
+    guard let n = node else{
+        return
+    }
+    if n.left != nil && n.right != nil{
+        traverse(n.left,"\(curr)->\(n.left!.val)",&paths)
+        traverse(n.right,"\(curr)->\(n.right!.val)",&paths)
+    }else if (n.left != nil){
+        traverse(n.left,"\(curr)->\(n.left!.val)",&paths)
+    }else if (n.right != nil){
+        traverse(n.right,"\(curr)->\(n.right!.val)",&paths)
+    }else{
+        paths.append(curr)
+    }
+}
 
 /* 268. Missing Number
  Approach : To get the answer in linear time and without extra space, get the sum of the values in the input array.
@@ -163,7 +196,7 @@ func missingNumber(_ nums: [Int]) -> Int {
 
 /*
  283. Move Zeroes
-
+ 
  */
 
 
@@ -232,8 +265,8 @@ func moveZeroesNaive(_ nums: inout [Int]) {
 }
 
 /*
-Solution found on leetcode
-*/
+ Solution found on leetcode
+ */
 func moveZeroes2(_ nums: inout [Int]) {
     print("input : \(nums)")
     var insertPos = 0
@@ -242,7 +275,7 @@ func moveZeroes2(_ nums: inout [Int]) {
             nums[insertPos] = num
             insertPos += 1
             print(nums)
-
+            
         }
     }
     print(insertPos)
