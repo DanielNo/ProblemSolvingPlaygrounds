@@ -172,6 +172,48 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
             
     return ans
 }
+
+/*
+3. Longest substring without repeating character (medium)
+Note : Solved again using a different approach (two pointers). Solved with relative ease, two compilations, and off by one mistake and syntax error.
+
+Approach : Use two pointers and a set to identify longest substring with unique characters.
+We will need a current length, longest string length, head and tail pointer(i and j).
+Two pointers implementation usually uses tail pointer as outer loop.
+Head pointer is used when some condition is invalid, in this problem's case. The invalid case is when a non unique variable is seen in the current substring. Increment the head pointer until the condition is valid again.
+
+Time : O(n)
+Space : O(1) if not counting string to character array pointer.
+
+*/
+func lengthOfLongestSubstring2(_ s: String) -> Int {
+        let count = s.count
+        if count <= 1{
+            return count
+        }
+        var set : Set<Character> = Set()
+        var str = Array(s)
+        var i = 0
+        var j = 0
+        var longest = Int.min
+        var length = 0
+        while j < count{
+            length += 1
+            if set.contains(str[j]){
+                while(set.contains(str[j])){
+                    set.remove(str[i])
+                    i+=1
+                    length-=1
+                }
+            }else{
+                longest = max(length,longest)
+            }
+            set.insert(str[j])
+            j+=1
+        }
+         
+        return longest
+    }
 /*
 16. 3Sum Closest (medium) brute force
 Approach : Calculate sum of all possible sum combinations of 3 numbers into a set to avoid duplicates.
@@ -277,6 +319,40 @@ Don’t really understand the time and space complexity for this problem, copied
         }
         return map[num-2]
     }
+
+/*
+64. Minimum Path Sum
+
+Approach : Calculate path sum using a bottom up approach.
+Iterate through the matrix from bottom right to top left, row by row.
+A point in the grid's path sum is itself + the minimum of its right or bottom point. The first coordinate in the grid will have the minimum path sum after iterating the grid using this algorithm.
+
+
+Note : Had to read discussions solution but practiced coding it out for practice, understood concept after a while of digesting.
+
+Time: O(n)
+Space : O(n) for copy of grid. O(1) if using mutable 2d array instead.
+*/
+
+func minPathSum(_ grid: [[Int]]) -> Int {
+        var g = grid
+            let h = grid.count
+        let w = grid[0].count
+        for y in (0..<h).reversed(){
+            for x in (0..<w).reversed(){
+                let right = x+1
+                let bottom =  y+1
+                if (right < w && bottom < h){
+                    g[y][x] += min(g[y+1][x],g[y][x+1])
+                }else if(right < w){
+                    g[y][x] += g[y][x+1]
+                }else if (bottom < h){
+                    g[y][x] += g[y+1][x]
+                }
+            }
+        }
+        return g[0][0]    
+}
 
 
 /*
