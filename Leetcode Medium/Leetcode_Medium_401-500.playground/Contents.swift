@@ -55,6 +55,39 @@ func countBattleships(_ board: [[Character]]) -> Int {
     return ships
 }
 
+/*
+487. Max Consecutive Ones II
+
+Approach : Use two pointers to maintain a sliding window with members that contain no more than 1 zero.
+Increase the window when the number is 1.
+If number is zero, increment the zero counter and if the number of zeros in the window is greater than 1. We decrease the size of the window until it is valid again. In this case, the window is valid when the number of zeros is <= 1.
+
+Note : Solved the problem version III before solving this one. Answer is pretty similiar so I was able to solve this problem without too much difficulty, no cheating and with help of a few run and adjust fixes.
+
+Time : O(n)
+Space : O(1)
+
+*/
+
+func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
+        var zeros = 0
+        var i = 0
+        var ans = Int.min
+        for (j,num) in nums.enumerated(){
+            if num == 0{
+                zeros += 1
+            }
+            while zeros > 1{
+                if nums[i] == 0{
+                    zeros -= 1
+                }
+                i+=1
+            }
+            ans = max(ans,j-i+1)
+        }
+        
+        return ans
+    }
 
 /*
  495. Teemo Attacking
