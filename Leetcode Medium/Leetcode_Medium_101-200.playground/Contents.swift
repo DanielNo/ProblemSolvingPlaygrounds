@@ -158,3 +158,51 @@ func bfsTraverse(_ root: TreeNode?,_ sum : Int,_ currSum : Int, _ pathArr : [Int
         bfsTraverse(root?.left,sum,currSum + r.val,newArr)
     }
 }
+
+/*
+ 186. Reverse Words in a String II
+ 
+ Approach : Reverse the string to setup , then scan the string for empty space characters to determine words in the array.
+ Reverse the ranges found when scanning the string for empty spaces.
+ 
+ Note : Had to cheat to figure out the logic of reversing the words and also misread the problem and initially reversed the characters in the string instead.
+ 
+ Time : O(n)
+ Space : O(1)
+ 
+ */
+
+func reverseWords(_ s: inout [Character]) {
+    reverseChars(&s,0,s.count-1)
+    var i = 0
+    var j = 0
+    while i < s.count{
+        let indexTuple = scanWordIndex(&s,i)
+        i = indexTuple.0
+        j = indexTuple.1
+        reverseChars(&s,i,j-1)
+        i = j+1
+    }
+}
+
+// Scans character array for next "word" range, returns start and end index for next word found.
+func scanWordIndex(_ s : inout [Character], _ startIndex : Int)->(Int,Int){
+    var start = startIndex
+    var end = startIndex
+    while (end < s.count && s[end] != " "){
+        end+=1
+    }
+    return (start,end)
+}
+
+func reverseChars(_ s : inout [Character],_ start : Int, _ end : Int){
+    var i = start
+    var j = end
+    while i < j{
+        let temp = s[i]
+        s[i] = s[j]
+        s[j] = temp
+        i+=1
+        j-=1
+    }
+}

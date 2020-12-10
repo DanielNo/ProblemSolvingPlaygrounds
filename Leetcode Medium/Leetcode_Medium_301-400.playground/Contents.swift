@@ -272,3 +272,32 @@ extension Heap where T: Equatable {
   }
   
 }
+
+/*
+ 397. Integer Replacement
+ Approach: Recursively calculate steps until base case is 1.
+ 
+ Note : Could be optimized with memoization. Tried plugging in memoization into the answer but got stuck when got wrong answers.
+ 
+ not sure on time/space complexity. this is my best guess
+ Time : O(log n)
+ Space : O(h) call stack space
+ 
+ */
+
+func integerReplacement(_ n: Int) -> Int {
+    let ans = recursivelyCalculate(n,0)
+    return ans
+}
+
+func recursivelyCalculate(_ num : Int,_ count : Int) -> Int{
+    if num == 1{
+        return count
+    }else if num % 2 == 0{
+        return recursivelyCalculate(num/2,count+1)
+    }else{
+        let c1 = recursivelyCalculate(num+1,count+1)
+        let c2 = recursivelyCalculate(num-1,count+1)
+        return min(c1,c2)
+    }
+}
