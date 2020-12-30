@@ -300,6 +300,39 @@ func getDecimalValueWrong(_ head: ListNode?) -> Int {
     return count
 }
 
+/*
+1290. Convert Binary Number in a Linked List to Integer
+ *solved again after a while*
+
+Approach : Do two passes on the linked list. Once to get the length, so we can calculate the first decimal number in base 2, second time to iterate through the linked list and perform math to find the decimal value.
+
+Note : Not sure how the discussion solutions solve this problem without reversing the linked list, or taking the approach I used. Other solutions use bit manipulation and can solve in one pass.
+
+TIme : O(n)
+Space : O(1)
+
+*/
+func getDecimalValue(_ head: ListNode?) -> Int {
+        var sum = 0
+        var count = 0
+        var dec = 0
+        var curr = head
+         
+        while curr != nil{
+            curr = curr?.next
+            count+=1
+            dec = dec == 0 ? 1 : dec*2
+        }
+        curr = head
+        while count != 0 && curr != nil{
+            sum = sum + (curr!.val * dec)
+            curr = curr?.next
+            count -= 1
+            dec /= 2
+        }
+        return sum
+    }
+
 
 /*
 1295. Find Numbers with Even Number of Digits
