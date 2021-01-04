@@ -5,6 +5,13 @@ import UIKit
 /*
  216. Combination Sum III
 
+ Approach : Use backtracking and a bottom up approach to break this problem down into sub problems.
+ Each backtrack will attempt every available choice that can lead to an answer. This will reduce the numbers remaining with each call, until we have a valid combination. The trick here is that since we can't use duplicates and have choices in the range of 1-9, we reduce the candidates at each step by using only numbers higher than the current number in question.
+ Ex : 1,3,7 = 11
+ 3,1,7 = 11 cannot be used because we only can use numbers higher than the current. This prevents duplicates from occuring in different orders.
+ 
+ Time : O(9!-K)/(9-k) taken from solutions.
+ Space : O(h) for call stack, and O(K) to store elements?
  
  */
 
@@ -24,14 +31,14 @@ func backtrack(_ k : Int,_ n : Int,_ nums : [Int],_ currNums : [Int]) -> Void{
     }
     
     for (i,num) in nums.enumerated(){
-        let range = Array(nums[i+1..<nums.count])
-        var newNums = currNums
-        newNums.append(num)
-        let remainder = n - num
-        if remainder < 0{
+        let nextSubrange = Array(nums[i+1..<nums.count])
+        var currentCombinationOfNumbers = currNums
+        currentCombinationOfNumbers.append(num)
+        let remainingSum = n - num
+        if remainingSum < 0{
             return
         }else{
-            backtrack(k-1,remainder,range,newNums)
+            backtrack(k-1,remainingSum,nextSubrange,currentCombinationOfNumbers)
         }
         
     }

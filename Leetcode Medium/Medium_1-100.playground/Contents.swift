@@ -454,3 +454,66 @@ func isValidSudoku(_ board: [[Character]]) -> Bool {
         return true
     }
 
+/*
+ 78. Subsets
+ 
+ Approach: Make recursive calls when splitting the decision tree.
+ Note: I added the removeLast call after looking at other solutions. My original answer without cheating was making copies of the current array subset at each recursive call. A bit confusing still how the removeLast() accomplishes the same thing.
+ Time : 2^n (verified from video)
+ Space : O(n) for height of call stack
+ */
+func subsets(_ nums: [Int]) -> [[Int]] {
+    var subsets : [[Int]] = []
+    var curr : [Int] = []
+    backtrack(nums,&subsets,&curr,0)
+    return subsets
+}
+
+func backtrack(_ nums:[Int],_ subsets: inout [[Int]],_ curr : inout [Int],_ i : Int)->Void{
+    subsets.append(curr)
+    if i == nums.count{
+        return
+    }
+    for index in i..<nums.count{
+        curr.append(nums[index])
+        backtrack(nums,&subsets,&curr,index+1)
+        curr.removeLast() // This line is important when using mutable params. Removes appended element at each level of recursive calls.
+    }
+    
+}
+
+/*
+ 90. Subsets II
+ 
+ Approach : Use a set of integer arrays to exclude duplicate subsets.
+ Sort the input array to avoid duplicates in out of order combinations.
+ Use a helper backtracking recursive function to eliminate the number of remaining choices for a subset. Specifically exclude the first item in subsequent recursive calls.
+ 
+ Return the set as an array.
+ 
+ Note: This probably can be optimized further but the question is already difficult and submission passes at 8ms, 86% and 60.85% space.
+ 
+ Time: O(nlogn) + 2^n. To sort and to iterate through subsets.
+ Space:O(h) call stack space (not sure if theres additional space)
+ 
+ */
+
+var subsets : Set<[Int]> = Set()
+func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
+    backtrack(nums.sorted(),Array())
+    return Array(subsets)
+}
+
+func backtrack(_ nums : [Int], _ subset : [Int])->Void{
+    subsets.insert(subset)
+    if nums.count == 0{
+        return
+    }
+    
+    for (i,num) in nums.enumerated(){
+        var sub = subset
+        sub.append(num)
+        var n = Array(nums[i+1..<nums.count])
+        backtrack(n,sub)
+    }
+}
