@@ -174,6 +174,34 @@ func traverse(_ node: TreeNode?,_ curr : String,_ paths : inout [String]){
     }
 }
 
+/*
+ 266. Palindrome Permutation
+ 
+ Approach : A palindrome permutation means the letter counts of the string validate as a palindrome.
+ The validation rules are : The remaining odd value counts should be less than or equal to 1
+ Ex: aabbeee
+ [a:2,b:2,e:3] the a and b even counts are removed and we check the odd count letters. Cannot have more than 1 odd value.
+ 
+ To solve we use fancy reduce into function that does the same as manually counting in a for loop. We filter the value array of the dictionary and check if the count of that result is <= 1.
+ 
+ Note : The edge case here is an odd letter sequence such as "eee" or "e"
+ This means only one letter with odd counts may exist.
+ 
+ Time : O(n)
+ Space : O(n)
+ 
+ 
+ */
+func canPermutePalindrome(_ s: String) -> Bool {
+    let dict = s.reduce(into:[:]){(counts,letter) in
+            counts[letter, default: 0] += 1
+    }
+    let remainder = dict.values.filter{
+        return $0 % 2 == 1
+    }
+    return remainder.count <= 1
+}
+
 /* 268. Missing Number
  Approach : To get the answer in linear time and without extra space, get the sum of the values in the input array.
  Then take the sum of 1...n and return the difference of the two to find the missing number.

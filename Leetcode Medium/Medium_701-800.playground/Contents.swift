@@ -51,6 +51,48 @@ func bstInsert(_ root: inout TreeNode, _ val: Int){
 }
 
 
+/*
+ 784. Letter Case Permutation
+ 
+ Approach : Build a lookup table to see if a character is a letter and also to find its inverse capitalization easily.
+ Make a recursive helper function that builds a permutation from the bottom up.
+ 
+ Note: Had to cheat on the first solve of the problem. But this is my own solution after not looking at the problem for some time, and resolving after getting more comfortable with backtracking. Solved again with relative ease.
+ 
+ Time: O(2^n)
+ Space: O(n) which is the height of the recursive call stack
+ 
+ */
+var table : [Character : Character] = [
+    "a" : "A","b" : "B","c" : "C","d" : "D","e" : "E","f" : "F","g" : "G","h" : "H","i" : "I","j" : "J","k" : "K","l" : "L","m" : "M","n" : "N","o" : "O","p" : "P","q" : "Q","r" : "R","s" : "S","t" : "T","u" : "U","v" : "V","w" : "W","x" : "X","y" : "Y","z" : "Z","A" : "a","B" : "b","C" : "c","D" : "d","E" : "e","F" : "f","G" : "g","H" : "h","I" : "i","J" : "j","K" : "k","L" : "l","M" : "m","N" : "n","O" : "o","P" : "p","Q" : "q","R" : "r","S" : "s","T" : "t","U" : "u","V" : "v","W" : "w","X" : "x","Y" : "y","Z" : "z"]
+
+func letterCasePermutation(_ S: String) -> [String] {
+    var perms : [String] = []
+    let str = Array(S)
+    backtrack(str, Array(), &perms,0)
+    return perms
+}
+
+func backtrack(_ chars : [Character],_ perm : [Character],_ perms : inout [String],_ index : Int ) -> Void{
+    // print("\(perm) \(index)")
+    if index == chars.count{
+        perms.append(String(perm))
+        return
+    }
+    let char = chars[index]
+    var currPerm = perm
+    currPerm.append(char)
+    if let val = table[char]{
+        backtrack(chars,currPerm,&perms,index+1)
+        currPerm.removeLast()
+        currPerm.append(val)
+        backtrack(chars,currPerm,&perms,index+1)
+    }else{
+        backtrack(chars,currPerm,&perms,index+1)
+    }
+}
+
+
 // 791. Custom Sort String
 
 // First attempt
