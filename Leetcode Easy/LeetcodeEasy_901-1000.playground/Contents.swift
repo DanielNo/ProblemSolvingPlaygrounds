@@ -35,6 +35,40 @@ sortArrayByParity([3,1,2,4,6,9,4,2,1,0,7])
 //sortArrayByParity([1,3])
 
 /*
+ 917. Reverse Only Letters
+ 
+ Approach : Use two pointers to iterate through array and find letters to swap.
+ From head and tail indicies, perform a check if the character is a letter by comparing unicode/ascii values. A new function was created in the swift library that does this for us.
+ 
+ Time : O(n)
+ Space : O(1)
+ 
+ */
+
+func reverseOnlyLetters(_ S: String) -> String {
+    var j = S.count-1
+    var i = 0
+    var str = Array(S)
+    while i < j{
+        if str[i].isLetter == false{
+            i+=1
+            continue
+        }
+        
+        while (str[j].isLetter == false){
+            j-=1
+        }
+        let temp = str[i]
+        str[i] = str[j]
+        str[j] = temp
+        i+=1
+        j-=1
+    }
+    return String(str)
+}
+
+
+/*
  922. Sort Array By Parity II
  Approach : iterate through array and check current element if it is in right place(odd value at odd index, even value at even index).
  If not at correct place, use second pointer to find next opposite value(even vs odd) and perform a swap.

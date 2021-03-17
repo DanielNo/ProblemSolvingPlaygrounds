@@ -1,6 +1,53 @@
 import UIKit
 
 /*
+ 1244. Design a Leaderboard
+ 
+ Approach(easy to code) : Create a dictionary to store player ID : player score totals.
+ Top K will sort the values and return the top K values found in the sorted array.
+ 
+ Note: There should be a more optimal approach to solve the problem. This is the easiest to code.
+ 
+ Time :
+ O(1) add/reset
+ O(n log n) topK function
+ 
+ Space : O(n) for dictionary and array created when calling topK Function
+ */
+
+class Leaderboard {
+    var dict : [Int:Int]
+
+    init() {
+        dict = Dictionary()
+    }
+    
+    func addScore(_ playerId: Int, _ score: Int) {
+        if let totalScore = dict[playerId]{
+            dict[playerId] = totalScore + score
+        }else{
+            dict[playerId] = score
+        }
+    }
+    
+    func top(_ K: Int) -> Int {
+        var sum = 0
+        var topK = dict.values.sorted { (a, b) -> Bool in
+                                       return a > b
+                                      }
+        for i in (0..<K){
+            sum += topK[i]
+        }
+        return sum
+    }
+    
+    func reset(_ playerId: Int) {
+        dict[playerId] = 0
+    }
+}
+
+
+/*
 1265. Print Immutable Linked List in Reverse
 Approach 1(extra space & reverse, trivial): Use space to hold elements returned by the getNext method. Reverse contents of the array. Iterate forwards and call the print method
 

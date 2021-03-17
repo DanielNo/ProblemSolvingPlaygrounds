@@ -340,6 +340,33 @@ func plusOne(_ digits: [Int]) -> [Int] {
         return [1]+ans
     }
 
+/*
+ 70. Climbing Stairs
+ Approach : This is an basic dynamic programming problem with recursion.
+ It may not be obvious but this question is asking for a fibonacci value. Build up a memoized dictionary of previous values and return.
+ 
+ Note : Tried backtracking initially but got time limit exceeded. Peeked at discussion titles and saw it was fibonacci sequence. Wrote it down on paper and was able to code up quickly without much trouble.
+ 
+ Time: O(n)
+ Space : O(n) for memo table
+ 
+ */
+var memo : [Int : Int] = [0:0,1:1,2:2]
+func climbStairs(_ n: Int) -> Int {
+    let ans = climb(n)
+    return ans
+}
+func climb(_ count : Int)->Int{
+    if let memoVal = memo[count]{
+        return memoVal
+    }else{
+        let val = climb(count-2) + climb(count-1)
+        memo[count] = val
+        return val
+    }
+}
+
+
 /* 100. Same Tree
  Approach : Use recursion and compare values of nodes.
  Time Complexity : O(n)
