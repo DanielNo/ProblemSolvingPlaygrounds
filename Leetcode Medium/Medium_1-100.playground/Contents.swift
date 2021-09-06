@@ -321,6 +321,35 @@ Don’t really understand the time and space complexity for this problem, copied
     }
 
 /*
+62. Unique Paths
+Approach : Solved a similiar problem and used the same approach.
+Create a matrix to store unique ways to reach the current index in 2d array.
+Since we are trying to reach the bottom right most unit in the matrix, we can only move either right or down. The leftmost and topmost indexes in matrix can only be reached 1 unique way. We initialize these boundary values first, then calculate the unique ways to reach a index, which is (number of way to reach left + top indexes)
+
+Time : O(m*n) where m = height and n = width
+Space : O(m*n) to store values
+
+*/
+
+ func uniquePaths(_ m: Int, _ n: Int) -> Int {
+        var grid : [[Int]] = []
+        for i in 0..<m{
+            grid.append(Array(repeating:0,count:n))
+        }
+        for y in 0..<m{
+            for x in 0..<n{
+                if (y == 0 || x == 0){
+                    grid[y][x] = 1
+                }else{
+                    grid[y][x] = grid[y - 1][x] + grid[y][x - 1]
+                }
+            }
+        }
+         
+        return grid[m-1][n-1]
+    }
+
+/*
 64. Minimum Path Sum
 
 Approach : Calculate path sum using a bottom up approach.
@@ -354,6 +383,41 @@ func minPathSum(_ grid: [[Int]]) -> Int {
         return g[0][0]    
 }
 
+/*
+73. Set Matrix Zeroes
+
+Approach : The question asks to scan the 2d array for zeros. If a row or column contains a zero, mutate the other elements in that row or column to a zero.
+The way I solved the problem was to scan the array twice. Scan the array once to find rows and columns that contain zeros, and insert them into a set. Second pass through, I mutate the array element if it's x or y index is contained in either of the set's that I recorded as containing zeros from the first scan.
+
+Time : O(n*m), linear for a 2d array
+Space : O(n+m), found this from looking at solution. Makes sense because number of rows and columns are stored in the set, the max being n+m entries in the sets.
+
+Note : Runtime is slower than most? But my solution is identical to the one listed under the solutions section.
+
+*/
+
+    func setZeroes(_ matrix: inout [[Int]]) {
+        var xSet : Set<Int> = Set()
+        var ySet : Set<Int> = Set()
+        for(y,n1) in matrix.enumerated(){
+            for(x,n2) in n1.enumerated(){
+                let val = matrix[y][x]
+                if val == 0{
+                    xSet.insert(x)
+                    ySet.insert(y)
+                }
+            }
+        }
+         
+        for(y,n1) in matrix.enumerated(){
+            for(x,n2) in n1.enumerated(){
+                if xSet.contains(x) || ySet.contains(y){
+                    let val = matrix[y][x]
+                    matrix[y][x] = 0
+                }
+            }
+        }
+    }
 
 /*
 94. Binary Tree Inorder Traversal

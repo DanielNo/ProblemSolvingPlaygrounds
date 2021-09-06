@@ -1,5 +1,30 @@
 import UIKit
 
+/*
+921. Minimum Add to Make Parentheses Valid
+Approach : Use a stack to keep track of unpaired parenthesis.
+Pushing items onto stack after checking if the top of the stack is a valid parenthesis of the current character in the string.
+
+Note : There is a more optimal solution found from looking at discussion using no space. That approach uses two variables to count closed and open parenthesis
+
+Time : O(n)
+Space : O(n)
+
+*/
+func minAddToMakeValid(_ S: String) -> Int {
+        var stack : [Character] = []
+        for (i,c) in S.enumerated(){
+            let last = stack.last
+            if last == "(" && c == ")"{
+                stack.removeLast()
+            }else{
+                stack.append(c)
+            }
+        }
+        return stack.count
+    }
+
+
 // 938. Range Sum of BST
 //Given the root node of a binary search tree, return the sum of values of all nodes with value between L and R (inclusive).
 //The binary search tree is guaranteed to have unique values.

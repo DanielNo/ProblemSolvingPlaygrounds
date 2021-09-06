@@ -44,6 +44,42 @@ func backtrack(_ k : Int,_ n : Int,_ nums : [Int],_ currNums : [Int]) -> Void{
     }
 }
 
+/*
+244. Shortest Word Distance II
+
+Approach : Create a dictionary of String : [Int] to store all indexes for all words. Then look up the indexes for a pair of words, and iterate through all and find the minimum.
+
+Time : O(n), not 100% sure
+Space : O(n)
+
+Note : Basically did the same thing as "shortest word distance I" except use a dictionary of arrays instead of two arrays.
+
+*/
+
+  var indexDict : [String : [Int]]
+    init(_ wordsDict: [String]) {
+        indexDict = Dictionary()
+        for (i,w) in wordsDict.enumerated(){
+            if var val = indexDict[w]{
+                val.append(i)
+                indexDict[w] = val
+            }else{
+                indexDict[w] = [i]
+            }
+        }
+    }
+     
+    func shortest(_ word1: String, _ word2: String) -> Int {
+        let arr1 = indexDict[word1]!
+        let arr2 = indexDict[word2]!
+        var minimum = Int.max
+        for i in arr1{
+            for j in arr2{
+                minimum = min(abs(i-j),minimum)
+            }
+        }
+        return minimum
+    }
 
 /* 287. Find the Duplicate Number
 

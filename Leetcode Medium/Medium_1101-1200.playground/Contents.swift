@@ -1,6 +1,40 @@
 import UIKit
 
 /*
+1190. Reverse Substrings Between Each Pair of Parentheses
+Approach : Use a 2d Array as it were a stack. One array will contain the contents of a set of parenthesis.
+When an opening parenthesis is iterated, we add an array to the stack and append items to the last element. When a closing parenthesis is encountered, we remove the last element from the stack, and append the contents to the 2nd last element after reversing it.
+
+Note : This approach was designed by myself and may not be the most optimal, but it worked after a few debug runs and index out of bound errors. Shoulld review again.
+
+Time: O(n)
+Space: O(n)
+*/
+
+func reverseParentheses(_ s: String) -> String {
+        var stack : [[Character]] = [[]]
+        for (i,c) in s.enumerated(){
+            if(c == "("){
+                stack.append([])
+            }else if(c == ")"){
+                if stack.count > 1{
+                    let last = stack.removeLast()
+                    let rev = Array(last.reversed())
+                    let end = stack.endIndex
+                    stack[end-1].append(contentsOf:rev)
+                }else{
+                    let end = stack.endIndex
+                    stack[end-1] = stack[end-1].reversed()
+                }
+            }else{
+                let end = stack.endIndex-1
+                stack[end].append(c)
+            }
+        }
+        return String(stack[0])
+    }
+
+/*
  1198. Find Smallest Common Element in All Rows
  
  Approach : Brute force two nested loops will iterate through the entire matrix.
