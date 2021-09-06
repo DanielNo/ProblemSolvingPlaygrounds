@@ -150,6 +150,38 @@ func shiftGrid(_ grid: [[Int]], _ k: Int) -> [[Int]] {
 let grid = [[1,2,3],[4,5,6],[7,8,9]]
 shiftGrid(grid, 7)
 
+/*
+1265. Print Immutable Linked List in Reverse
+Approach : Use a stack to append items from the list node.
+First item will be on the bottom of the stack, last item will be on top of the stack. Popping from the top of the stack will return the linked list nodes in reverse.
+
+Time : O(n)
+Space : O(n)
+
+Note : Solved again using a stack to practice instead of recursion(initial solution months ago)
+
+*/
+ var stack : [ImmutableListNode] = []
+    func printLinkedListInReverse(_ head: ImmutableListNode?) {
+        guard let _ = head else{
+            return
+        }
+        var curr = head
+        stack.append(curr!)
+        while (curr != nil){
+            if let next = curr?.getNext(){
+                stack.append(next)
+                curr = next
+            }else{
+                curr = nil
+            }
+        }
+        while (stack.count != 0){
+            let last = stack.removeLast()
+            last.printValue()
+        }
+         
+    }
 
 /*
  1266. Minimum Time Visiting All Points

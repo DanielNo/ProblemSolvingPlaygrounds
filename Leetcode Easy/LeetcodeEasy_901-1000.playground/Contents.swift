@@ -274,3 +274,36 @@ func sortedSquares(_ A: [Int]) -> [Int] {
     
     return arr
 }
+
+/*
+989. Add to Array-Form of Integer
+
+Approach : Use the carry as a sum for the current digits place being calculated.
+Add each place of the numbers array with the sum value. Use modulo and divide by 10 to get each sum value.
+
+
+Time: O(n)
+Space: O(1) if not counting output array
+ex: [2,1,5] + 806
+806 + 5 = 811 / 10 = 81 and 811%10 = 1 for the ones place
+81+1 = 82 / 10 = 8  82 % 10 = 2
+
+
+*/
+
+func addToArrayForm(_ num: [Int], _ k: Int) -> [Int] {
+        var ans : [Int] = []
+        var carry = k
+         
+        for (i,n) in num.enumerated().reversed(){
+                carry += n
+                ans.insert(carry%10,at:0)
+                carry /= 10
+        }
+         
+        while carry > 0{
+            ans.insert(carry%10,at:0)
+            carry = carry/10
+        }
+        return ans
+    }

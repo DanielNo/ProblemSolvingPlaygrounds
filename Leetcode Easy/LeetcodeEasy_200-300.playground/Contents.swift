@@ -140,6 +140,97 @@ func reverseList(_ head: ListNode?) -> ListNode? {
 }
 
 /*
+243. Shortest Word Distance
+
+Approach : Store all indexes of word 1 and word 2 in seperate arrays. Iterate through both arrays and calculate the word distance. Store the minimum word distance and return it.
+
+Time : Roughly O(n), there is a nested for loop but it will never reach O(n)^2.
+Space : O(n)
+Note : Can be solved with no index arrays.
+*/
+ func shortestDistance(_ wordsDict: [String], _ word1: String, _ word2: String) -> Int {
+        var wordOneIndexes : [Int] = []
+        var wordTwoIndexes : [Int] = []
+         
+        for(i,word) in wordsDict.enumerated(){
+            if word == word1{
+                wordOneIndexes.append(i)
+            }else if word == word2{
+                wordTwoIndexes.append(i)
+            }
+        }
+        var minimum = Int.max
+        for index in wordOneIndexes{
+            for index2 in wordTwoIndexes{
+                minimum = min(abs(index-index2),minimum)
+            }
+        }
+         
+        return minimum
+    }
+
+/*
+252. Meeting Rooms
+
+Approach: Using the question's specified boundaries: An interval is stated to be in range (0...100000)
+We create an array to store units of time booked already. We initialize it as an array of 100000 with values of false.
+For each interval we rewrite values in this time booked array to true. If an interval we are iterating, finds a booked value(true), we know we cannot attend all meetings because there is a time overlap.
+
+Time : O(n) * 1000, not sure
+Space : O(100000), constant space?
+
+*/
+
+func canAttendMeetings(_ intervals: [[Int]]) -> Bool {
+    var arr : [Bool] = Array(repeating: false, count: 100000)
+        for (i,interval) in intervals.enumerated(){
+            let low = interval[0]
+            let high = interval[1]
+             
+            for time in low..<high{
+                if time >= 100000{
+                    break
+                }
+                if arr[time] == false{
+                    arr[time] = true
+                }else{
+                    return false
+                }
+            }
+        }
+         
+        return true
+    }
+
+/*
+Note: Solved using the approach shown in discussion and solutions tabs, which is to use sorting
+Approach : Sort the ranges by their start times. This enables us to compare the tail and head of neighboring intervals for an overlap.
+
+Time : O(n log n)
+Space : O(1)
+*/
+
+    func canAttendMeetingsBySorting(_ intervals: [[Int]]) -> Bool {
+        if intervals.count <= 1{
+            return true
+        }
+        var sortedIntervals = intervals.sorted(by:{
+            return $0[0] < $1[0]
+        })
+         
+        for i in 0..<sortedIntervals.count-1{
+            let first = sortedIntervals[i]
+            let second = sortedIntervals[i+1]
+            if first[1] <= second[0]{
+                continue
+            }else{
+                return false
+            }
+        }
+        return true
+    }
+
+/*
  257. Binary Tree Paths
  Approach : Recursively traverse through binary tree using a helper method. Pass in the current path at each node. When reaching a node without any leaves, append to answer.
  

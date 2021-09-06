@@ -44,6 +44,65 @@ let case2 = [10,3,8,9,4]
 let case3 = [2,1]
 findRelativeRanksHash(case2)
 
+/*
+515. Find Largest Value in Each Tree Row
+
+Approach : Create a dictionary to store the largest value for each row. Use the row as the dictionary key, the values will be the largest value for each row.
+
+Time : O(n log n ) due to sorting the dictionary
+Space : O(n)
+
+Note : Can optimize by using an array to store the largest values
+
+*/
+var dict : [Int:Int] = [:]
+    func largestValues(_ root: TreeNode?) -> [Int] {
+        traverse(0,root)
+        let sorted = dict.sorted{$0.key < $1.key}.map{$0.value}
+        return sorted
+    }
+     
+    func traverse(_ rowLevel : Int,_ node: TreeNode?) -> Void{
+        guard let r = node else{
+            return
+        }
+         
+        if let value = dict[rowLevel]{
+            dict[rowLevel] = max(value,r.val)
+        }else{
+            dict[rowLevel] = r.val
+        }
+         
+        traverse(rowLevel + 1, r.left)
+        traverse(rowLevel + 1, r.right)
+         
+         
+    }
+
+/*
+Approach with Array
+Note : Was very easy to change from dictionary to array implementation.
+*/
+var arr : [Int] = []
+    func largestValues(_ root: TreeNode?) -> [Int] {
+        traverse(0,root)
+        return arr
+    }
+     
+    func traverse(_ rowLevel : Int,_ node: TreeNode?) -> Void{
+        guard let r = node else{
+            return
+        }
+        if arr.count > rowLevel{
+            arr[rowLevel] = max(arr[rowLevel],r.val)
+        }else{
+            arr.append(r.val)
+        }
+         
+        traverse(rowLevel + 1, r.left)
+        traverse(rowLevel + 1, r.right)
+    }
+
 /* 520. Detect Capital
  
  Approach : Think about the cases that validate the string. The input to be true, must be all capitals, first capital, or all lower cased.
